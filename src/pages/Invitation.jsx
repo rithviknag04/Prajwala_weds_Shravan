@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import Sparkles from '../components/Sparkles';
 import { weddingInfo } from '../data/weddingData';
+import { useLanguage, T } from '../context/LanguageContext';
+import psMonogram from '../assets/logos/ps-monogram-maroon.png';
 
 export default function Invitation({ onNavigate }) {
+  const { t } = useLanguage();
   const [envelopeState, setEnvelopeState] = useState({ open: false, out: false });
   const [confetti, setConfetti] = useState([]);
 
@@ -44,11 +47,21 @@ export default function Invitation({ onNavigate }) {
       <Sparkles count={14} spread={21} durationBase={7} />
 
       <div className="par" id="par">
-        <p>With the blessings of</p>
-        <small>Parents of {weddingInfo.bride}</small>
-        <p className="pn">Mr. [Father’s name] & Mrs. [Mother’s name]</p>
-        <small>Parents of {weddingInfo.groom}</small>
-        <p className="pn">Mr. [Father’s name] & Mrs. [Mother’s name]</p>
+        <p className="par-invocation">{t(weddingInfo.invocation)}</p>
+        <p className="par-memorial"><small>{t(weddingInfo.grandparents)}</small></p>
+        <div className="par-family-banner">
+          <b>{t(weddingInfo.family)}</b>
+        </div>
+        <div className="par-parents-grid">
+          <div>
+            <small><T en="Bride's Parents" kn="ವಧುವಿನ ಪೋಷಕರು" /></small>
+            <p className="pn">{t(weddingInfo.brideParents)}</p>
+          </div>
+          <div>
+            <small><T en="Groom's Parents" kn="ವರನ ಪೋಷಕರು" /></small>
+            <p className="pn">{t(weddingInfo.groomParents)}</p>
+          </div>
+        </div>
       </div>
 
       <div className="stage">
@@ -56,34 +69,119 @@ export default function Invitation({ onNavigate }) {
           <button
             className={`env ${envelopeState.open ? 'open' : ''}`}
             id="ev"
-            aria-label="Open the invitation"
+            aria-label={t("Open the invitation")}
             onClick={handleEnvelopeClick}
           >
-            <b>P&S</b>
+            <b className="env-seal">
+              <img
+                src={psMonogram}
+                alt="Prajwala & Shravan Monogram"
+                className="env-seal-logo"
+              />
+            </b>
           </button>
-          <p className="hint" id="hint">Tap the seal to open your invitation</p>
+          <p className="hint" id="hint">
+            <T>Tap the seal to open your invitation</T>
+          </p>
         </div>
 
         <div className="paper" id="card">
-          <p style={{ '--d': '0.55s' }}>With the blessings of our families</p>
-          <h1 style={{ '--d': '0.68s' }}>
-            {weddingInfo.bride} <i>and</i> {weddingInfo.groom}
-          </h1>
-          <p style={{ '--d': '0.81s' }}>invite you to celebrate their wedding</p>
-          <hr style={{ '--d': '0.94s' }} />
-          <p className="big" style={{ '--d': '1.07s' }}>{weddingInfo.dateFormatted}</p>
-          <p style={{ '--d': '1.20s' }}>{weddingInfo.time}</p>
-          <p style={{ '--d': '1.33s' }}>{weddingInfo.venue}</p>
+          <p className="card-invocation" style={{ '--d': '0.50s' }}>
+            {t(weddingInfo.invocation)}
+          </p>
+
+          <div className="card-lead-text" style={{ '--d': '0.58s' }}>
+            <span className="card-family-highlight">{t(weddingInfo.family)}</span>
+            <p className="card-lead-sub">
+              <T
+                en="cordially invite you and your family to grace the wedding of"
+                kn="ತಮ್ಮ ಸುಪುತ್ರಿಯ ಶುಭ ವಿವಾಹ ಮಹೋತ್ಸವಕ್ಕೆ ಸಕುಟುಂಬ ಸಮೇತರಾಗಿ ಆಗಮಿಸಲು ಕೋರುತ್ತಾರೆ"
+              />
+            </p>
+          </div>
+
+          <div className="card-couple-royal" style={{ '--d': '0.68s' }}>
+            <div className="card-person-box">
+              <span className="card-person-name">{t(weddingInfo.bride)}</span>
+              <span className="card-person-degree-pill">B.Arch</span>
+            </div>
+
+            <div className="card-conjunction-wrap">
+              <span className="card-conjunction-flourish">❧</span>
+              <span className="card-conjunction-text"><T en="with" kn="ಮತ್ತು" /></span>
+              <span className="card-conjunction-flourish">❧</span>
+            </div>
+
+            <div className="card-person-box">
+              <span className="card-person-name">{t(weddingInfo.groom)}</span>
+              <span className="card-person-degree-pill">B.E, M.Tech</span>
+              <p className="card-groom-parents">
+                <T
+                  en="(Son of Smt. Sudhamani M J & Sri Sanjeevachar K)"
+                  kn="(ಶ್ರೀಮತಿ ಸುಧಾಮಣಿ ಎಂ ಜೆ ಮತ್ತು ಶ್ರೀ ಸಂಜೀವಾಚಾರ್ ಕೆ ಇವರ ದ್ವಿತೀಯ ಪುತ್ರ)"
+                />
+              </p>
+            </div>
+          </div>
+
+          <hr className="card-ornate-divider" style={{ '--d': '0.84s' }} />
+
+          {/* RECEPTION */}
+          <div className="card-reception-gold-box" style={{ '--d': '0.94s' }}>
+            <p className="card-event-badge-tag">
+              ✨ <T en="Wedding Reception" kn="ವಿವಾಹ ಸ್ವಾಗತ ಸಮಾರಂಭ" />
+            </p>
+            <p className="card-event-date-row">
+              {t(weddingInfo.dateFormatted)}
+            </p>
+            <p className="card-event-timings-row">
+              <T
+                en="Devatha Karya at 4:00 pm • Reception at 7:00 pm onwards"
+                kn="ದೇವತಾ ಕಾರ್ಯಗಳು ಸಂಜೆ 4:00 • ಆರತಕ್ಷತೆ ಸಂಜೆ 7:00 ರಿಂದ"
+              />
+            </p>
+          </div>
+
+          <div className="card-venue-container" style={{ '--d': '1.04s' }}>
+            <div className="card-venue-title">
+              🏛️ {t(weddingInfo.venue)}
+            </div>
+            <div className="card-venue-sub">
+              {t(weddingInfo.venueAddress)}
+            </div>
+          </div>
+
+          <div className="card-muhurtham-pill" style={{ '--d': '1.14s' }}>
+            <span className="muhurtham-lamp">🪔</span>
+            <span className="muhurtham-pill-text">
+              <T
+                en="Shubha Muhurtham: Monday, 14 Dec 2026 in Kumbha Lagna (12:10 pm - 12:35 pm)"
+                kn="ಶುಭ ಮುಹೂರ್ತ: ಸೋಮವಾರ, 14 ಡಿಸೆಂಬರ್ 2026 • ಮಧ್ಯಾಹ್ನ 12:10 ರಿಂದ 12:35 ರ ಶುಭ ಕುಂಭ ಲಗ್ನದಲ್ಲಿ"
+              />
+            </span>
+          </div>
+
+          <div className="card-regards-box" style={{ '--d': '1.24s' }}>
+            <div className="card-regards-title">
+              <T en="With Warm Regards & Blessings:" kn="ಆಹ್ವಾನಿಸುವವರು:" />
+            </div>
+            <div className="card-regards-names">
+              <span>{t(weddingInfo.brideParents)}</span>
+              <span className="regards-sep">•</span>
+              <span>{t(weddingInfo.brother)}</span>
+            </div>
+          </div>
+
           <a
             className="btn btn-wed"
             href="#details"
-            style={{ '--d': '1.46s' }}
+            style={{ '--d': '1.34s', marginTop: '16px' }}
             onClick={(e) => {
               e.preventDefault();
               onNavigate('details');
             }}
           >
-            See all details
+            <T>See all details</T>
           </a>
         </div>
 
@@ -104,4 +202,3 @@ export default function Invitation({ onNavigate }) {
     </section>
   );
 }
-

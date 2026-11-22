@@ -65,6 +65,18 @@ html {
   font: 600 1.5rem 'Cormorant Garamond', serif;
   color: #c8942e;
   text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.navbar-monogram-icon {
+  height: 28px;
+  width: auto;
+  object-fit: contain;
+  display: inline-block;
+  vertical-align: middle;
+  filter: drop-shadow(0 1px 3px rgba(200, 148, 46, 0.4));
 }
 
 .navbar-brand:hover {
@@ -222,7 +234,7 @@ hr {
   position: relative;
   width: min(340px, 86vw);
   aspect-ratio: 3/2;
-  margin: 4vh auto 0;
+  margin: 10px auto 0;
   background: #7a1a2e;
   border: 1px solid var(--gold);
   cursor: pointer;
@@ -246,31 +258,46 @@ hr {
   transform: rotateX(180deg);
 }
 
-.env b {
+.env b, .env .env-seal {
   position: absolute;
   left: 50%;
   top: 62%;
   transform: translate(-50%, -50%);
-  width: 56px;
-  height: 56px;
+  width: 66px;
+  height: 66px;
   border-radius: 50%;
-  background: var(--gold);
-  color: var(--deep);
-  display: grid;
-  place-items: center;
-  font: 600 1.15rem 'Cormorant Garamond', serif;
+  background: radial-gradient(circle at 35% 35%, #ffd700 0%, #c8942e 62%, #8b6214 100%);
+  border: 2px solid rgba(255, 245, 200, 0.9);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.45), inset 0 2px 4px rgba(255, 255, 255, 0.5), inset 0 -2px 4px rgba(0, 0, 0, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   z-index: 2;
-  animation: pulse 2s ease-in-out infinite;
+  animation: pulse 2.2s ease-in-out infinite;
+  padding: 8px;
+  box-sizing: border-box;
+}
+
+.env-seal-logo {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  filter: drop-shadow(0 1px 1px rgba(255, 255, 255, 0.3));
+  pointer-events: none;
 }
 
 .hint {
-  margin-top: 22px;
+  margin-top: 14px;
   opacity: 0.85;
   animation: blink 2.2s ease-in-out infinite;
 }
 
 .stage {
   display: grid;
+  justify-items: center;
+  align-items: start;
+  margin-top: 12px;
 }
 
 .stage > * {
@@ -278,8 +305,9 @@ hr {
 }
 
 .envwrap {
-  align-self: center;
+  align-self: start;
   z-index: 2;
+  width: 100%;
   transition: transform 1s cubic-bezier(0.5, 0, 0.2, 1), opacity 0.9s ease;
 }
 
@@ -292,6 +320,17 @@ hr {
   transition: transform 1.2s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.8s ease;
 }
 
+#p-home:not(.out) .stage .paper {
+  max-height: 0;
+  overflow: hidden;
+  padding-top: 0;
+  padding-bottom: 0;
+  border-width: 0;
+  outline-width: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
 #p-home.open .env::before {
   transform: rotateX(180deg);
 }
@@ -301,21 +340,28 @@ hr {
 }
 
 #p-home.out .envwrap {
-  transform: translateY(90px) scale(0.92);
+  transform: translateY(60px) scale(0.92);
   opacity: 0;
   pointer-events: none;
+  max-height: 0;
+  overflow: hidden;
 }
 
-#p-home.out .paper {
+#p-home.out .stage .paper {
   opacity: 1;
+  max-height: 3500px;
   transform: none;
   pointer-events: auto;
+  padding: 38px 24px;
+  border: 1px solid var(--gold);
+  outline: 1px solid var(--gold);
+  outline-offset: 6px;
 }
 
 .par {
-  transition: opacity 0.8s ease;
+  transition: opacity 0.5s ease, max-height 0.7s ease, margin 0.7s ease;
   text-align: center;
-  margin-top: 2vh;
+  margin-top: 8px;
 }
 
 .par p {
@@ -326,7 +372,7 @@ hr {
   display: block;
   opacity: 0.8;
   font-size: 0.9rem;
-  margin-top: 12px;
+  margin-top: 8px;
 }
 
 .par .pn {
@@ -336,6 +382,10 @@ hr {
 
 #p-home.out .par {
   opacity: 0;
+  max-height: 0;
+  margin: 0;
+  overflow: hidden;
+  pointer-events: none;
 }
 
 .btn-wed {
@@ -431,6 +481,21 @@ hr {
   to {
     background-position: -200% 0;
   }
+}
+
+.main-event-invite-tag {
+  color: #8a1c2f;
+  font-weight: 600;
+  font-size: 0.95rem;
+  letter-spacing: 0.03em;
+  margin-bottom: 2px;
+}
+
+.invite-muhurtham-sub {
+  font-size: 0.85rem;
+  color: #7a4a3a;
+  margin-top: 4px;
+  font-weight: 500;
 }
 
 /* Confetti Burst Petals */
@@ -562,33 +627,33 @@ hr {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 2vw;
-  margin: 10px 0 18px;
+  gap: clamp(16px, 4vw, 36px);
+  margin: 14px 0 24px;
   position: relative;
 }
 
 .ph {
-  width: clamp(120px, 36vw, 210px);
+  width: clamp(130px, 34vw, 215px);
+  margin: 0;
   animation: inL 1.3s cubic-bezier(0.2, 0.8, 0.2, 1) both, bob 6s ease-in-out 1.6s infinite;
 }
 
 .ph.r {
-  margin-top: 56px;
+  margin-top: 0;
   animation: inR 1.3s cubic-bezier(0.2, 0.8, 0.2, 1) 0.3s both, bob 6s ease-in-out 1.9s infinite;
 }
 
 .ph .img {
   aspect-ratio: 3/4;
-  border-radius: 999px 999px 6px 6px;
+  border-radius: 999px 999px 8px 8px;
   border: 2px solid var(--gold);
   outline: 1px solid var(--gold);
   outline-offset: 5px;
   background: linear-gradient(160deg, #7a1a2e, #3d0916);
-  display: grid;
-  place-items: center;
-  padding: 10px;
-  font-size: 0.85rem;
+  display: block;
+  padding: 0;
   overflow: hidden;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.45), 0 0 15px rgba(200, 148, 46, 0.25);
   animation: glow 3s ease-in-out infinite alternate;
   position: relative;
 }
@@ -597,18 +662,28 @@ hr {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center center;
+  display: block;
+  transform-origin: center 28%;
   animation: kb 14s ease-in-out infinite alternate;
 }
 
 .ph figcaption {
-  margin-top: 16px;
-  font: 600 1.4rem 'Cormorant Garamond', serif;
+  margin-top: 14px;
+  font: 600 1.35rem 'Cormorant Garamond', 'Noto Serif Kannada', serif;
   color: var(--gold);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  line-height: 1.25;
 }
 
 .amp {
-  font: italic 600 clamp(2.4rem, 10vw, 3.6rem) / 1 'Cormorant Garamond', serif;
+  font: italic 600 clamp(2.4rem, 8vw, 3.6rem) / 1 'Cormorant Garamond', serif;
   color: var(--gold);
+  align-self: center;
+  margin-top: -30px;
   animation: pop 1s cubic-bezier(0.3, 1.6, 0.5, 1) 1.2s both;
 }
 
@@ -751,7 +826,7 @@ hr {
 
 .tgw {
   position: relative;
-  width: min(92%, 520px);
+  width: min(88vw, 360px);
   margin: 0 auto;
 }
 
@@ -773,7 +848,7 @@ hr {
 /* Swipeable Card Stack */
 .stk {
   position: relative;
-  aspect-ratio: 4/3;
+  aspect-ratio: 3/4;
   touch-action: pan-y;
   animation: hover 5s ease-in-out infinite;
   user-select: none;
@@ -811,6 +886,46 @@ hr {
   height: 100%;
   object-fit: cover;
   pointer-events: none;
+}
+
+.pc-photo-wrapper {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.pc-photo-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 25%;
+  display: block;
+}
+
+.pc-photo-caption {
+  position: absolute;
+  inset: auto 0 0;
+  background: linear-gradient(to top, rgba(30, 4, 10, 0.96) 0%, rgba(30, 4, 10, 0.75) 60%, transparent 100%);
+  padding: 18px 12px 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.pc-photo-caption .pc-title {
+  font-family: 'Cormorant Garamond', 'Noto Serif Kannada', serif;
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: #ffd700;
+  line-height: 1.2;
+}
+
+.pc-photo-caption .pc-sub {
+  font-size: 0.82rem;
+  color: #f7e6bd;
+  margin-top: 2px;
 }
 
 .pc.drag {
@@ -1109,3 +1224,1468 @@ footer {
   font-size: 0.9rem;
 }
 
+
+/* ==========================================================================
+   Kannada Typography & Language Support
+   ========================================================================== */
+body.lang-kn {
+  font-family: 'Noto Sans Kannada', 'Hind', system-ui, sans-serif;
+  line-height: 1.85;
+}
+
+body.lang-kn h1,
+body.lang-kn h2,
+body.lang-kn h3,
+body.lang-kn .navbar-brand,
+body.lang-kn .btn-wed,
+body.lang-kn figcaption,
+body.lang-kn .paper h1,
+body.lang-kn .paper h2 {
+  font-family: 'Noto Serif Kannada', 'Cormorant Garamond', Georgia, serif;
+}
+
+body.lang-kn .paper h1 {
+  line-height: 1.4;
+  letter-spacing: 0.02em;
+}
+
+body.lang-kn .par p,
+body.lang-kn .par small {
+  line-height: 1.7;
+}
+
+/* Navbar Language Pill & Responsive Visibility */
+.nav-lang-mobile {
+  display: none;
+}
+
+.nav-lang-desktop {
+  display: inline-flex;
+  align-items: center;
+  margin-left: 1.25rem;
+}
+
+@media (max-width: 768px) {
+  .nav-lang-mobile {
+    display: inline-flex;
+    align-items: center;
+    margin-left: auto;
+    margin-right: 0.75rem;
+  }
+  .nav-lang-desktop {
+    display: none;
+  }
+}
+
+.btn-lang-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(42, 6, 12, 0.7);
+  border: 1px solid var(--gold);
+  border-radius: 20px;
+  color: #f7e6bd;
+  padding: 4px 12px;
+  font-size: 0.85rem;
+  font-family: 'Hind', 'Noto Sans Kannada', sans-serif;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  backdrop-filter: blur(4px);
+}
+
+.btn-lang-pill:hover {
+  background: rgba(90, 15, 31, 0.9);
+  box-shadow: 0 0 10px rgba(200, 148, 46, 0.35);
+  transform: translateY(-1px);
+}
+
+.btn-lang-pill .lang-globe {
+  font-size: 0.95rem;
+  opacity: 0.9;
+  transition: transform 0.2s;
+  cursor: pointer;
+}
+
+.btn-lang-pill .lang-globe:hover {
+  transform: scale(1.2);
+}
+
+.btn-lang-pill .divider {
+  opacity: 0.45;
+  font-size: 0.75rem;
+}
+
+.btn-lang-pill .active-lang {
+  color: #ffd700;
+  font-weight: 700;
+  text-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
+}
+
+/* ==========================================================================
+   Language Selection Alert Modal (Auspicious Wedding Aesthetics)
+   ========================================================================== */
+.lang-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(26, 4, 9, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: 16px;
+  animation: modalFadeIn 0.35s ease-out;
+}
+
+@keyframes modalFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.lang-modal-box {
+  position: relative;
+  width: 100%;
+  max-width: 520px;
+  background: radial-gradient(circle at 50% 0%, #4f0c1b 0%, #2b060d 100%);
+  border: 2px solid var(--gold);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.7), 0 0 25px rgba(200, 148, 46, 0.25);
+  border-radius: 12px;
+  padding: 32px 24px 24px;
+  text-align: center;
+  color: #f7e6bd;
+  animation: modalScaleUp 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes modalScaleUp {
+  from { transform: scale(0.92); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.lang-modal-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  background: transparent;
+  border: 1px solid rgba(200, 148, 46, 0.4);
+  color: var(--gold);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.lang-modal-close:hover {
+  background: rgba(200, 148, 46, 0.2);
+  color: #fff;
+  border-color: var(--gold);
+}
+
+.lang-modal-om {
+  font-size: 1.05rem;
+  color: #ffd700;
+  letter-spacing: 0.15em;
+  margin-bottom: 8px;
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
+}
+
+.lang-modal-title {
+  font-family: 'Cormorant Garamond', 'Noto Serif Kannada', Georgia, serif;
+  font-size: 2.1rem;
+  font-weight: 600;
+  color: #ffd700;
+  margin-bottom: 4px;
+  line-height: 1.2;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.4);
+}
+
+.lang-modal-sub {
+  font-size: 0.88rem;
+  color: #e6b94f;
+  margin-bottom: 14px;
+  opacity: 0.9;
+}
+
+.lang-modal-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 12px auto;
+  position: relative;
+  width: 120px;
+}
+
+.lang-modal-divider::before,
+.lang-modal-divider::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid rgba(200, 148, 46, 0.4);
+}
+
+.lang-modal-gem {
+  color: var(--gold);
+  padding: 0 8px;
+  font-size: 0.9rem;
+}
+
+.lang-modal-instruction {
+  font-size: 0.98rem;
+  line-height: 1.5;
+  margin-bottom: 24px;
+  color: #f7e6bd;
+}
+
+.lang-modal-instruction .kn-sub {
+  font-family: 'Noto Sans Kannada', sans-serif;
+  font-size: 0.92rem;
+  color: #e0b080;
+}
+
+.lang-modal-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 22px;
+}
+
+@media (max-width: 480px) {
+  .lang-modal-options {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+}
+
+.lang-option-card {
+  background: rgba(30, 4, 8, 0.65);
+  border: 1.5px solid rgba(200, 148, 46, 0.5);
+  border-radius: 10px;
+  padding: 18px 14px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  color: #f7e6bd;
+}
+
+.lang-option-card:hover {
+  background: rgba(90, 15, 31, 0.7);
+  border-color: #ffd700;
+  box-shadow: 0 6px 20px rgba(200, 148, 46, 0.3);
+  transform: translateY(-3px);
+}
+
+.lang-option-card.active {
+  border-color: #ffd700;
+  background: rgba(90, 15, 31, 0.85);
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.35);
+}
+
+.lang-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #c8942e, #8f6516);
+  color: #2a060d;
+  font-weight: 700;
+  font-size: 1.1rem;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+}
+
+.lang-name {
+  font-family: 'Cormorant Garamond', 'Noto Serif Kannada', Georgia, serif;
+  font-size: 1.45rem;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 4px;
+}
+
+.lang-option-kn .lang-name {
+  font-family: 'Noto Serif Kannada', serif;
+  font-size: 1.4rem;
+}
+
+.lang-desc {
+  font-size: 0.82rem;
+  color: #d8c29d;
+  line-height: 1.4;
+  margin-bottom: 14px;
+  min-height: 38px;
+}
+
+.lang-select-btn {
+  display: inline-block;
+  padding: 6px 14px;
+  background: #c8942e;
+  color: #2a060d;
+  font-weight: 600;
+  font-size: 0.82rem;
+  border-radius: 20px;
+  transition: all 0.2s;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+}
+
+.lang-option-card:hover .lang-select-btn {
+  background: #ffd700;
+  transform: scale(1.05);
+}
+
+.lang-modal-footer {
+  font-size: 0.78rem;
+  color: #c9af88;
+  line-height: 1.5;
+  border-top: 1px solid rgba(200, 148, 46, 0.2);
+  padding-top: 14px;
+}
+
+/* ==========================================================================
+   Countdown Timer & Event Pages (Reception & Muhurtham)
+   ========================================================================== */
+
+/* Clean Event Cards inside Details Page */
+.event-card-row {
+  background: rgba(255, 255, 255, 0.5);
+  border: 1.5px solid rgba(200, 148, 46, 0.65);
+  border-radius: 12px;
+  padding: 18px 18px;
+  margin-bottom: 20px;
+  text-align: left;
+  box-shadow: 0 4px 14px rgba(58, 16, 24, 0.08);
+  transition: all 0.25s ease;
+  box-sizing: border-box;
+}
+
+.event-card-row:hover {
+  border-color: #c8942e;
+  box-shadow: 0 6px 20px rgba(200, 148, 46, 0.22);
+  transform: translateY(-2px);
+}
+
+.event-card-row.gold-card {
+  border-color: rgba(200, 148, 46, 0.9);
+  background: rgba(255, 250, 235, 0.65);
+}
+
+.event-card-row.main-event-card {
+  border: 2px solid var(--gold);
+  background: linear-gradient(135deg, rgba(255, 250, 238, 0.95), rgba(254, 243, 218, 0.85));
+  box-shadow: 0 6px 22px rgba(200, 148, 46, 0.25);
+}
+
+.event-card-row.main-event-card:hover {
+  box-shadow: 0 8px 28px rgba(200, 148, 46, 0.35);
+  border-color: #ffd700;
+}
+
+.event-card-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.event-card-tag {
+  display: inline-block;
+  padding: 3px 10px;
+  background: #8a1c2f;
+  color: #ffd700;
+  border-radius: 12px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.event-card-tag.main-tag {
+  background: linear-gradient(135deg, #8a1c2f, #5a0f1f);
+  color: #ffd700;
+  border: 1px solid var(--gold);
+  padding: 3px 12px;
+  box-shadow: 0 2px 6px rgba(138, 28, 47, 0.3);
+}
+
+.event-card-tag.gold-tag {
+  background: #c8942e;
+  color: #3a1018;
+}
+
+.event-card-header h3 {
+  font-family: 'Cormorant Garamond', 'Noto Serif Kannada', serif;
+  font-size: 1.45rem;
+  color: #5a0f1f;
+  margin: 0;
+}
+
+.event-card-body {
+  margin-bottom: 16px;
+}
+
+.event-card-line {
+  font-size: 0.95rem;
+  color: #3a1018;
+  margin-bottom: 6px;
+  line-height: 1.5;
+}
+
+.event-card-line strong {
+  color: #8a1c2f;
+  font-weight: 600;
+}
+
+.btn-event-cta {
+  display: block;
+  width: 100%;
+  text-align: center;
+  padding: 10px 14px;
+  font-size: 0.92rem;
+  border-radius: 8px;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+/* Countdown Timer Box - Royal & Ultra-Legible */
+.countdown-box {
+  background: linear-gradient(145deg, #5a0f1f, #3a0814);
+  border: 2px solid var(--gold);
+  border-radius: 14px;
+  padding: 16px 14px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 440px;
+  width: 100%;
+  margin: 16px auto;
+  box-sizing: border-box;
+}
+
+.countdown-title {
+  font-family: 'Cormorant Garamond', 'Noto Serif Kannada', serif;
+  font-size: 1.15rem;
+  color: #ffd700;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.countdown-grid {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+}
+
+.countdown-unit {
+  flex: 1;
+  max-width: 72px;
+  padding: 8px 4px;
+  background: rgba(20, 3, 7, 0.65);
+  border: 1px solid rgba(200, 148, 46, 0.5);
+  border-radius: 8px;
+  text-align: center;
+}
+
+.countdown-num {
+  font-family: 'Hind', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-variant-numeric: tabular-nums;
+  font-size: 1.85rem;
+  font-weight: 700;
+  color: #ffd700;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+
+.countdown-seconds {
+  color: #ffffff;
+}
+
+.countdown-lbl {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #f7e6bd;
+  margin-top: 4px;
+  font-family: 'Hind', 'Noto Sans Kannada', sans-serif;
+}
+
+.countdown-sep {
+  font-family: monospace;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--gold);
+  opacity: 0.8;
+  padding: 0 1px;
+}
+
+.countdown-complete-msg {
+  color: #ffd700;
+  font-size: 1.15rem;
+  font-weight: 600;
+  padding: 10px;
+  text-align: center;
+}
+
+/* Dedicated Event Page Details */
+.event-paper {
+  position: relative;
+  text-align: center;
+}
+
+.event-nav-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.btn-event-nav {
+  background: #8a1c2f;
+  border: 1px solid var(--gold);
+  border-radius: 20px;
+  color: #f7e6bd;
+  padding: 6px 14px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: 'Hind', 'Noto Sans Kannada', sans-serif;
+}
+
+.btn-event-nav:hover {
+  background: #a8283f;
+  color: #ffd700;
+  transform: translateY(-1px);
+}
+
+.btn-event-nav.btn-switch {
+  margin-left: auto;
+  border-color: #ffd700;
+  color: #ffd700;
+}
+
+.event-badge {
+  display: inline-block;
+  padding: 4px 16px;
+  background: #8a1c2f;
+  border: 1px solid var(--gold);
+  border-radius: 20px;
+  font-size: 0.9rem;
+  color: #ffd700;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.event-badge.gold-badge {
+  background: #c8942e;
+  color: #3a1018;
+}
+
+.event-badge.main-event-badge {
+  background: linear-gradient(135deg, #8a1c2f, #5a0f1f);
+  color: #ffd700;
+  border: 1.5px solid var(--gold);
+  box-shadow: 0 4px 14px rgba(138, 28, 47, 0.35);
+}
+
+.event-title {
+  font-family: 'Cormorant Garamond', 'Noto Serif Kannada', Georgia, serif;
+  font-size: 2.3rem;
+  color: #5a0f1f;
+  margin-bottom: 8px;
+  line-height: 1.2;
+}
+
+.event-date-time {
+  font-size: 1.05rem;
+  color: #7a4a3a;
+  margin-bottom: 20px;
+}
+
+.event-timer-container {
+  margin: 16px auto 24px;
+}
+
+.event-divider {
+  border: 0;
+  height: 1px;
+  background: radial-gradient(circle, rgba(200, 148, 46, 0.7) 0%, transparent 80%);
+  margin: 24px 0;
+}
+
+.event-info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin: 22px 0;
+}
+
+@media (max-width: 540px) {
+  .event-info-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.event-info-card {
+  background: rgba(255, 255, 255, 0.45);
+  border: 1px solid rgba(200, 148, 46, 0.5);
+  border-radius: 12px;
+  padding: 16px 14px;
+  text-align: center;
+}
+
+.event-info-card .info-icon {
+  font-size: 1.5rem;
+  margin-bottom: 4px;
+}
+
+.event-info-card h3 {
+  font-family: 'Cormorant Garamond', 'Noto Serif Kannada', serif;
+  font-size: 1.2rem;
+  color: #8a1c2f;
+  margin-bottom: 4px;
+}
+
+.event-info-card .primary-text {
+  font-weight: 600;
+  color: #3a1018;
+  font-size: 0.95rem;
+  margin-bottom: 4px;
+}
+
+.event-info-card .sub-text {
+  font-size: 0.82rem;
+  color: #7a4a3a;
+  line-height: 1.4;
+}
+
+.event-section-block {
+  background: rgba(255, 255, 255, 0.45);
+  border: 1px solid rgba(200, 148, 46, 0.45);
+  border-radius: 12px;
+  padding: 16px 18px;
+  text-align: left;
+  margin: 20px 0;
+}
+
+.event-section-block h3 {
+  font-family: 'Cormorant Garamond', 'Noto Serif Kannada', serif;
+  font-size: 1.3rem;
+  color: #8a1c2f;
+  margin-bottom: 10px;
+}
+
+.event-highlights-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.event-highlights-list li {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  padding: 6px 0;
+  font-size: 0.92rem;
+  color: #3a1018;
+  border-bottom: 1px dashed rgba(200, 148, 46, 0.3);
+}
+
+.event-highlights-list li:last-child {
+  border-bottom: none;
+}
+
+.hl-bullet {
+  color: #c8942e;
+  font-size: 0.8rem;
+}
+
+.event-section-block.feast-block {
+  border-color: rgba(200, 148, 46, 0.7);
+  background: rgba(255, 250, 235, 0.7);
+}
+
+.event-section-block.feast-block p {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #3a1018;
+}
+
+.event-footer-action {
+  margin-top: 24px;
+}
+
+/* ==========================================================================
+   AUTHENTIC INVITATION CARD & WEDDING DETAILS STYLING (FROM PDF)
+   ========================================================================== */
+
+/* Invocations & Vedic Header */
+.welcome-invocation, .details-invocation, .par-invocation, .card-invocation {
+  font-family: 'Cormorant Garamond', 'Noto Serif Kannada', serif;
+  color: var(--gold);
+  font-size: 1.05rem;
+  letter-spacing: 0.5px;
+  margin-bottom: 12px;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.4);
+}
+
+.details-invocation {
+  color: #8a1c2f;
+  margin-bottom: 10px;
+  font-size: 1.15rem;
+  font-weight: 600;
+  text-shadow: none;
+}
+
+.card-invocation {
+  color: #8a1c2f;
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+  text-shadow: none;
+}
+
+.degree-tag {
+  display: block;
+  font-size: 0.8rem;
+  color: #c8942e;
+  font-weight: 500;
+  margin-top: 2px;
+  letter-spacing: 0.5px;
+}
+
+.degree-sub {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #7a4a3a;
+}
+
+.welcome-main-event-badge {
+  display: inline-block;
+  background: rgba(200, 148, 46, 0.18);
+  border: 1px solid var(--gold);
+  color: #ffd700;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.88rem;
+  margin: 10px auto;
+  box-shadow: 0 0 10px rgba(200, 148, 46, 0.25);
+}
+
+.date-highlight {
+  font-size: 1.25rem !important;
+  color: #f7e6bd !important;
+  font-weight: 600;
+}
+
+/* Invitation Envelope Header */
+.par-memorial {
+  color: #ffd700;
+  font-size: 0.82rem;
+  margin-bottom: 8px;
+}
+
+.par-family-banner {
+  font-family: 'Cormorant Garamond', 'Noto Serif Kannada', serif;
+  font-size: 1.35rem;
+  color: #f7e6bd;
+  margin: 6px 0 14px;
+}
+
+.par-parents-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  text-align: center;
+  margin-top: 8px;
+}
+
+@media (max-width: 480px) {
+  .par-parents-grid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+}
+
+/* Card Elements inside Invitation */
+.card-lead-text {
+  margin-bottom: 16px;
+}
+
+.card-family-highlight {
+  font-family: 'Cormorant Garamond', 'Noto Serif Kannada', Georgia, serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #5a0f1f;
+  letter-spacing: 0.5px;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.card-lead-sub {
+  font-size: 0.88rem;
+  color: #7a4a3a;
+  line-height: 1.5;
+  margin: 0 auto;
+  max-width: 420px;
+}
+
+/* Symmetrical Royal Couple Typography */
+.card-couple-royal {
+  margin: 18px 0 16px;
+  text-align: center;
+}
+
+.card-person-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-person-name {
+  font-family: 'Cormorant Garamond', 'Noto Serif Kannada', Georgia, serif;
+  font-size: clamp(2.1rem, 7vw, 2.75rem);
+  font-weight: 700;
+  color: #5a0f1f;
+  line-height: 1.15;
+  letter-spacing: 0.5px;
+}
+
+.card-person-degree-pill {
+  display: inline-block;
+  font-family: 'Hind', sans-serif;
+  font-size: 0.76rem;
+  font-weight: 600;
+  letter-spacing: 0.8px;
+  color: #8a1c2f;
+  background: rgba(200, 148, 46, 0.12);
+  border: 1px solid rgba(200, 148, 46, 0.45);
+  border-radius: 12px;
+  padding: 2px 10px;
+  margin-top: 5px;
+}
+
+.card-conjunction-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin: 10px 0;
+}
+
+.card-conjunction-flourish {
+  color: var(--gold);
+  font-size: 0.95rem;
+  opacity: 0.75;
+}
+
+.card-conjunction-text {
+  font-family: 'Cormorant Garamond', 'Noto Serif Kannada', Georgia, serif;
+  font-style: italic;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #8a1c2f;
+}
+
+.card-groom-parents {
+  font-family: 'Cormorant Garamond', 'Noto Serif Kannada', serif;
+  font-size: 0.92rem;
+  color: #7a4a3a;
+  font-style: italic;
+  margin: 8px auto 0;
+  line-height: 1.45;
+  max-width: 440px;
+}
+
+.card-ornate-divider {
+  border: 0;
+  border-top: 1px solid var(--gold);
+  width: 70px;
+  margin: 18px auto;
+  opacity: 0.7;
+}
+
+/* Reception Gold Highlight Box */
+.card-reception-gold-box {
+  background: linear-gradient(145deg, rgba(255, 252, 245, 0.96), rgba(247, 230, 189, 0.45));
+  border: 1.5px solid var(--gold);
+  border-radius: 12px;
+  padding: 14px 12px;
+  margin: 16px auto 14px;
+  box-shadow: 0 4px 16px rgba(90, 15, 31, 0.08), inset 0 0 10px rgba(200, 148, 46, 0.1);
+  max-width: 440px;
+}
+
+.card-event-badge-tag {
+  font-family: 'Hind', sans-serif;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #8a1c2f;
+  font-weight: 700;
+  margin: 0 0 4px;
+}
+
+.card-event-date-row {
+  font-family: 'Cormorant Garamond', 'Noto Serif Kannada', Georgia, serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #5a0f1f;
+  line-height: 1.2;
+  margin: 0 0 6px;
+}
+
+.card-event-timings-row {
+  font-family: 'Hind', sans-serif;
+  font-size: 0.92rem;
+  color: #4a1520;
+  font-weight: 500;
+  line-height: 1.45;
+  margin: 0;
+}
+
+/* Venue Section */
+.card-venue-container {
+  margin: 12px auto;
+  text-align: center;
+  max-width: 440px;
+}
+
+.card-venue-title {
+  font-family: 'Cormorant Garamond', 'Noto Serif Kannada', Georgia, serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #5a0f1f;
+}
+
+.card-venue-sub {
+  font-size: 0.86rem;
+  color: #6b3e32;
+  margin-top: 2px;
+  line-height: 1.4;
+}
+
+/* Shubha Muhurtham Pill */
+.card-muhurtham-pill {
+  background: rgba(200, 148, 46, 0.12);
+  border: 1px dashed var(--gold);
+  border-radius: 10px;
+  padding: 10px 14px;
+  margin: 14px auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  max-width: 440px;
+  font-size: 0.88rem;
+  color: #5a0f1f;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.card-muhurtham-pill .muhurtham-lamp {
+  font-size: 1.1rem;
+}
+
+/* Regards Box */
+.card-regards-box {
+  border-top: 1px solid rgba(200, 148, 46, 0.3);
+  padding-top: 14px;
+  margin-top: 16px;
+  text-align: center;
+}
+
+.card-regards-title {
+  font-family: 'Cormorant Garamond', 'Noto Serif Kannada', Georgia, serif;
+  font-size: 0.95rem;
+  color: #8a1c2f;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+}
+
+.card-regards-names {
+  font-size: 0.92rem;
+  color: #3a1018;
+  font-weight: 600;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.card-regards-names .regards-sep {
+  color: var(--gold);
+  opacity: 0.7;
+}
+
+/* Details Page Sections */
+.details-section-heading {
+  font-family: 'Cormorant Garamond', 'Noto Serif Kannada', serif;
+  font-size: 1.35rem;
+  color: #8a1c2f;
+  text-align: left;
+  margin: 28px 0 14px;
+}
+
+.pre-events-container {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 24px;
+}
+
+.pre-event-card {
+  background: rgba(255, 255, 255, 0.65);
+  border: 1px solid rgba(200, 148, 46, 0.5);
+  border-radius: 12px;
+  padding: 16px;
+  text-align: left;
+  box-shadow: 0 2px 8px rgba(74, 11, 25, 0.05);
+}
+
+.pre-event-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.pre-badge {
+  background: #5a0f1f;
+  color: #f7e6bd;
+  font-size: 0.78rem;
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.pre-event-header h4 {
+  font-family: 'Cormorant Garamond', 'Noto Serif Kannada', serif;
+  font-size: 1.25rem;
+  color: #8a1c2f;
+  margin: 0;
+}
+
+.pre-line {
+  font-size: 0.92rem;
+  color: #3a1018;
+  margin: 4px 0;
+  line-height: 1.45;
+}
+
+.btn-map-link {
+  display: inline-block;
+  margin-top: 10px;
+  color: #8a1c2f;
+  font-size: 0.88rem;
+  font-weight: 600;
+  text-decoration: none;
+  border: 1px solid #8a1c2f;
+  padding: 5px 12px;
+  border-radius: 20px;
+  background: rgba(138, 28, 47, 0.06);
+  transition: all 0.25s ease;
+}
+
+.btn-map-link:hover {
+  background: #8a1c2f;
+  color: #fff;
+}
+
+/* Venue Highlight Box */
+.venue-highlight-box {
+  background: rgba(255, 250, 235, 0.85);
+  border: 1.5px solid var(--gold);
+  border-radius: 14px;
+  padding: 18px 16px;
+  margin: 24px 0;
+  text-align: center;
+}
+
+.venue-highlight-box h4 {
+  font-family: 'Cormorant Garamond', 'Noto Serif Kannada', serif;
+  font-size: 1.3rem;
+  color: #8a1c2f;
+  margin-bottom: 8px;
+}
+
+.venue-address-text {
+  font-size: 0.98rem;
+  font-weight: 600;
+  color: #3a1018;
+  margin-bottom: 14px;
+  line-height: 1.5;
+}
+
+.btn-map-main {
+  display: inline-block;
+  padding: 8px 20px;
+  font-size: 0.95rem;
+  border-radius: 24px;
+}
+
+/* Contacts Section */
+.contacts-section {
+  margin: 28px 0;
+  text-align: left;
+}
+
+.contacts-subtitle {
+  font-size: 0.88rem;
+  color: #7a4a3a;
+  margin-bottom: 12px;
+}
+
+.contacts-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.contact-pill {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(255, 255, 255, 0.65);
+  border: 1px solid rgba(200, 148, 46, 0.45);
+  border-radius: 10px;
+  padding: 10px 14px;
+}
+
+.contact-name {
+  font-weight: 600;
+  color: #5a0f1f;
+  font-size: 0.95rem;
+}
+
+.contact-call-btn {
+  color: #8a1c2f;
+  background: #fbf1dc;
+  border: 1px solid #8a1c2f;
+  padding: 4px 12px;
+  border-radius: 16px;
+  font-size: 0.86rem;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.contact-call-btn:hover {
+  background: #8a1c2f;
+  color: #fff;
+}
+
+.home-address-note {
+  font-size: 0.88rem;
+  color: #5a0f1f;
+  margin-top: 12px;
+  line-height: 1.45;
+}
+
+/* Special Appeal Food Waste Card (Page 8) */
+.special-appeal-card {
+  background: linear-gradient(135deg, #fffdf8, #fff3e6);
+  border: 2px solid #c8942e;
+  border-radius: 14px;
+  padding: 20px 16px;
+  margin: 26px 0;
+  text-align: center;
+  box-shadow: 0 4px 16px rgba(200, 148, 46, 0.18);
+}
+
+.appeal-icon {
+  font-size: 2rem;
+  margin-bottom: 6px;
+}
+
+.special-appeal-card h4 {
+  font-family: 'Cormorant Garamond', 'Noto Serif Kannada', serif;
+  font-size: 1.35rem;
+  color: #8a1c2f;
+  margin-bottom: 10px;
+}
+
+.appeal-text-primary {
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: #5a0f1f;
+  margin-bottom: 8px;
+  line-height: 1.45;
+}
+
+.appeal-text-secondary {
+  font-size: 0.92rem;
+  color: #7a4a3a;
+  line-height: 1.45;
+}
+
+/* Best Wishes */
+.wishes-section {
+  margin-top: 24px;
+  text-align: center;
+  border-top: 1px solid rgba(200, 148, 46, 0.4);
+  padding-top: 18px;
+}
+
+.wishes-section small {
+  color: #7a4a3a;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+.wishes-grid {
+  display: flex;
+  gap: 12px;
+  margin-top: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.wishes-badge {
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(200, 148, 46, 0.4);
+  border-radius: 10px;
+  padding: 10px 14px;
+  flex: 1 1 200px;
+  text-align: center;
+}
+
+.wishes-title {
+  display: block;
+  font-weight: 700;
+  color: #5a0f1f;
+  font-size: 0.88rem;
+}
+
+.wishes-desc {
+  display: block;
+  font-size: 0.76rem;
+  color: #7a4a3a;
+  margin: 2px 0;
+}
+
+.wishes-phone {
+  display: block;
+  font-size: 0.78rem;
+  color: #8a1c2f;
+  font-weight: 600;
+}
+
+.panchanga-text {
+  font-size: 0.86rem;
+  color: #7a4a3a;
+  margin: -6px auto 16px;
+  line-height: 1.5;
+  max-width: 480px;
+  font-style: italic;
+}
+
+/* ==========================================================================
+   ELEGANT, LEGIBLE & RESPONSIVE WEDDING FOOTER
+   ========================================================================== */
+
+.site-footer {
+  background: #360712;
+  border-top: 1px solid var(--gold);
+  padding: 40px 20px 32px;
+  color: #f7e6bd;
+  margin-top: 36px;
+  text-align: center;
+}
+
+.site-footer-container {
+  max-width: 780px;
+  margin: 0 auto;
+}
+
+/* 1. Top Couple & Family Header in Footer */
+.footer-top-header {
+  margin-bottom: 22px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid rgba(200, 148, 46, 0.25);
+  text-align: center;
+}
+
+.footer-couple-brand {
+  font-family: 'Cormorant Garamond', 'Noto Serif Kannada', Georgia, serif;
+  font-size: 1.55rem;
+  color: #ffd700;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.footer-couple-brand i {
+  font-weight: 400;
+  font-size: 1.25rem;
+  color: #dfcaa2;
+}
+
+.footer-meta {
+  font-size: 0.9rem;
+  color: #dfcaa2;
+  margin-top: 6px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.footer-meta-sep {
+  color: var(--gold);
+  opacity: 0.6;
+}
+
+/* 2. Single-Line Clean Contact Numbers (No buttons) */
+.footer-contacts-wrapper {
+  margin-bottom: 22px;
+}
+
+.footer-contacts-line {
+  font-size: 0.95rem;
+  color: #f7e6bd;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 8px 12px;
+  line-height: 1.6;
+  margin-bottom: 8px;
+}
+
+.footer-contact-lead {
+  color: #ffd700;
+  font-weight: 600;
+  margin-right: 2px;
+}
+
+.footer-contact-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap;
+}
+
+.footer-contact-item .contact-name {
+  color: #dfcaa2;
+  font-weight: 500;
+}
+
+.footer-contact-item .contact-tel {
+  color: #ffd700;
+  font-weight: 600;
+  text-decoration: none;
+  font-family: 'Hind', sans-serif;
+  letter-spacing: 0.3px;
+  transition: color 0.2s ease;
+}
+
+.footer-contact-item .contact-tel:hover {
+  color: #fff;
+  text-decoration: underline;
+}
+
+.footer-contact-sep {
+  color: var(--gold);
+  opacity: 0.55;
+  font-weight: 300;
+}
+
+.footer-address-single {
+  font-size: 0.86rem;
+  color: #d4b483;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  line-height: 1.45;
+}
+
+/* 2. Best Wishes Logos at Bottom - Sleek Partner Cloud Style */
+.footer-wishes-wrapper {
+  padding-top: 6px;
+}
+
+.footer-wishes-title {
+  font-family: 'Cormorant Garamond', 'Noto Serif Kannada', Georgia, serif;
+  font-size: 1.05rem;
+  color: var(--gold);
+  font-weight: 600;
+  margin-bottom: 18px;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  opacity: 0.95;
+}
+
+.footer-logos-strip {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 52px;
+  flex-wrap: wrap;
+  padding: 8px 16px;
+}
+
+.footer-logo-wrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.82;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  cursor: default;
+}
+
+.footer-logo-wrap:hover {
+  opacity: 1;
+  transform: translateY(-2px) scale(1.04);
+}
+
+.footer-logo-img {
+  display: block;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.35));
+}
+
+.footer-logo-img.logo-nag {
+  height: 62px;
+  max-width: 180px;
+}
+
+.footer-logo-img.logo-advika {
+  height: 48px;
+  max-width: 230px;
+}
+
+@media (max-width: 600px) {
+  .footer-logos-strip {
+    gap: 32px;
+  }
+  .footer-logo-img.logo-nag {
+    height: 52px;
+    max-width: 140px;
+  }
+  .footer-logo-img.logo-advika {
+    height: 40px;
+    max-width: 180px;
+  }
+}

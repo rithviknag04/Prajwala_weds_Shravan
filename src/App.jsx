@@ -1,38 +1,48 @@
 import React, { useState, useEffect } from 'react';
 
+// Context
+import { LanguageProvider } from './context/LanguageContext';
+
 // Components
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
-import LightboxModal from './components/LightboxModal';
+import LanguageModal from './components/LanguageModal';
 
 // Pages
 import Welcome from './pages/Welcome';
 import Invitation from './pages/Invitation';
-import Story from './pages/Story';
 import Details from './pages/Details';
-import Gallery from './pages/Gallery';
-import Family from './pages/Family';
+import Reception from './pages/Reception';
+import Muhurtham from './pages/Muhurtham';
 
-// Data
-import { galleryPhotos } from './data/weddingData';
-
-export default function App() {
+function WeddingApp() {
   const [page, setPage] = useState('welcome');
-  const [activeLightbox, setActiveLightbox] = useState(null);
 
-  // Sync state with URL hash
+  // Sync state with URL hash and pathnames for robust refresh handling
   useEffect(() => {
-    const handleHash = () => {
-      const hash = window.location.hash.slice(1);
-      const validPages = ['welcome', 'home', 'story', 'details', 'gallery', 'family'];
-      const target = validPages.includes(hash) ? hash : 'welcome';
+    const handleRoute = () => {
+      const hash = window.location.hash.slice(1).toLowerCase();
+      const path = window.location.pathname.replace(/^\/|\/$/g, '').toLowerCase();
+      const validPages = ['welcome', 'home', 'details', 'reception', 'muhurtham'];
+
+      let target = 'welcome';
+      if (validPages.includes(hash)) {
+        target = hash;
+      } else if (validPages.includes(path)) {
+        target = path;
+      }
+
       setPage(target);
       window.scrollTo(0, 0);
     };
 
-    handleHash();
-    window.addEventListener('hashchange', handleHash);
-    return () => window.removeEventListener('hashchange', handleHash);
+    handleRoute();
+    window.addEventListener('hashchange', handleRoute);
+    window.addEventListener('popstate', handleRoute);
+    return () => {
+      window.removeEventListener('hashchange', handleRoute);
+      window.removeEventListener('popstate', handleRoute);
+    };
   }, []);
 
   const navigateTo = (target) => {
@@ -46,20 +56,23 @@ export default function App() {
       <main className="container">
         {page === 'welcome' && <Welcome onNavigate={navigateTo} />}
         {page === 'home' && <Invitation onNavigate={navigateTo} />}
-        {page === 'story' && <Story />}
-        {page === 'details' && <Details />}
-        {page === 'gallery' && <Gallery onOpenLightbox={setActiveLightbox} />}
-        {page === 'family' && <Family />}
+        {page === 'details' && <Details onNavigate={navigateTo} />}
+        {page === 'reception' && <Reception onNavigate={navigateTo} />}
+        {page === 'muhurtham' && <Muhurtham onNavigate={navigateTo} />}
       </main>
 
       <Footer />
 
-      <LightboxModal
-        photos={galleryPhotos}
-        activeIndex={activeLightbox}
-        onClose={() => setActiveLightbox(null)}
-        onSelectIndex={setActiveLightbox}
-      />
+      {/* Language Selection Alert / Modal */}
+      <LanguageModal />
     </>
+  );
+}
+
+export default function App() {
+  return (
+    <LanguageProvider>
+      <WeddingApp />
+    </LanguageProvider>
   );
 }

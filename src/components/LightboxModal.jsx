@@ -1,6 +1,9 @@
 import React, { useEffect } from 'react';
+import { useLanguage, T } from '../context/LanguageContext';
 
 export default function LightboxModal({ photos, activeIndex, onClose, onSelectIndex }) {
+  const { t } = useLanguage();
+
   if (activeIndex === null || !photos || !photos[activeIndex]) {
     return null;
   }
@@ -28,28 +31,27 @@ export default function LightboxModal({ photos, activeIndex, onClose, onSelectIn
   }, [activeIndex, total]);
 
   return (
-    <div className="lightbox-backdrop" onClick={onClose}>
+    <div className="lightbox-backdrop" onClick={onClose} role="dialog" aria-modal="true">
       <div className="lightbox-content" onClick={(e) => e.stopPropagation()}>
-        <button className="lightbox-close" aria-label="Close" onClick={onClose}>
+        <button className="lightbox-close" aria-label={t("Close")} onClick={onClose}>
           ✕
         </button>
         <div className="lightbox-img-area">
-          <img src={currentPhoto.src} alt={currentPhoto.title} />
+          <img src={currentPhoto.src} alt={t(currentPhoto.title)} />
         </div>
-        <div className="lightbox-title">{currentPhoto.title}</div>
+        <div className="lightbox-title">{t(currentPhoto.title)}</div>
         <div className="lightbox-counter">
-          {currentPhoto.sub} • {activeIndex + 1} of {total}
+          {t(currentPhoto.sub)} • {activeIndex + 1} <T en="of" kn="/" /> {total}
         </div>
         <div className="lightbox-nav">
           <button className="lightbox-btn" onClick={handlePrev}>
-            ‹ Previous
+            <T>‹ Previous</T>
           </button>
           <button className="lightbox-btn" onClick={handleNext}>
-            Next ›
+            <T>Next ›</T>
           </button>
         </div>
       </div>
     </div>
   );
 }
-

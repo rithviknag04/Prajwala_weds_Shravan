@@ -3,8 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Prajwala & Shravan – Wedding</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Hind:wght@400;500&display=swap" rel="stylesheet">
+<title>Prajwala & Shravan – Wedding | ಶುಭ ವಿವಾಹ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Hind:wght@400;500;600&family=Noto+Sans+Kannada:wght@400;500;600;700&family=Noto+Serif+Kannada:wght@400;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="./src/styles.css">
 
 <!-- React 18 & Babel for instant standalone browser viewing -->
@@ -18,223 +20,498 @@
 <script type="text/babel">
 const { useState, useEffect, useRef } = React;
 
-function App() {
-  const [page, setPage] = useState('welcome');
-  const [navOpen, setNavOpen] = useState(false);
-  const [envelopeState, setEnvelopeState] = useState({ open: false, out: false });
-  const [confetti, setConfetti] = useState([]);
-  
-  // Swipeable photo cards state
-  const [cards, setCards] = useState([
-    { id: 1, text: 'Photo 1 of both of you' },
-    { id: 2, text: 'Photo 2' },
-    { id: 3, text: 'Photo 3' },
-    { id: 4, text: 'Photo 4' }
-  ]);
-  const dragRef = useRef({ isDown: false, startX: 0, currentX: 0 });
-  const [topCardStyle, setTopCardStyle] = useState({});
-  const [isDragging, setIsDragging] = useState(false);
-  const [activeLightbox, setActiveLightbox] = useState(null);
+const translations = {
+  // Invocations & Branding
+  "|| Sri Vishwakarma Parabrahmane Namaha ||": "|| ಶ್ರೀ ವಿಶ್ವಕರ್ಮ ಪರಬ್ರಹ್ಮಣೇ ನಮಃ ||",
+  "P & S": "ಪ್ರ & ಶ್ರ",
+  "Prajwala": "ಪ್ರಜ್ವಲಾ",
+  "Shravan": "ಶ್ರವಣ್",
+  "Prajwala Nag": "ಪ್ರಜ್ವಲಾ ನಾಗ್",
+  "Shravan Kumar S": "ಶ್ರವಣ್ ಕುಮಾರ್ ಎಸ್",
+  "Prajwala & Shravan": "ಪ್ರಜ್ವಲಾ ಮತ್ತು ಶ್ರವಣ್",
+  "Two hearts, one story": "ಎರಡು ಮನಸ್ಸು, ಒಂದು ಸುಂದರ ಬಂಧ",
+  "Two hearts, one sacred celebration": "ಎರಡು ಮನಸ್ಸು, ಒಂದು ಪವಿತ್ರ ಬಂಧ",
+  "are getting married": "ವಿವಾಹ ಬಂಧನಕ್ಕೆ ಕಾಲಿಡುತ್ತಿದ್ದಾರೆ",
+  "Scroll down": "ಕೆಳಗೆ ಸ್ಕ್ರಾಲ್ ಮಾಡಿ",
+  "Swipe the photos": "ಭಾವಚಿತ್ರಗಳನ್ನು ಸರಿಸಿ (Swipe)",
+  "Tap or swipe the photos": "ಭಾವಚಿತ್ರಗಳನ್ನು ಸ್ಪರ್ಶಿಸಿ ಅಥವಾ ಸರಿಸಿ (Tap / Swipe)",
+  "Open the invitation": "ಆಮಂತ್ರಣ ಪತ್ರಿಕೆ ತೆರೆಯಿರಿ",
+  "Tap the seal to open your invitation": "ಆಮಂತ್ರಣವನ್ನು ತೆರೆಯಲು ಮುದ್ರೆಯನ್ನು ಒತ್ತಿರಿ",
+  "See all details": "ಹೆಚ್ಚಿನ ವಿವರಗಳನ್ನು ವೀಕ್ಷಿಸಿ",
+  "Back to Top": "ಮೇಲಕ್ಕೆ ಹೋಗಿ",
 
-  const galleryPhotos = [
+  // Dates & Times
+  "Friday, 11 December 2026": "ಶುಕ್ರವಾರ, 11 ಡಿಸೆಂಬರ್ 2026",
+  "Saturday, 12 December 2026": "ಶನಿವಾರ, 12 ಡಿಸೆಂಬರ್ 2026",
+  "Sunday, 13 December 2026": "ಭಾನುವಾರ, 13 ಡಿಸೆಂಬರ್ 2026",
+  "Monday, 14 December 2026": "ಸೋಮವಾರ, 14 ಡಿಸೆಂಬರ್ 2026",
+  "13 & 14 December 2026": "13 ಮತ್ತು 14 ಡಿಸೆಂಬರ್ 2026",
+  "7:00 pm onwards": "ಸಂಜೆ 7:00 ರಿಂದ",
+  "12:10 pm to 12:35 pm (Kumbha Lagna)": "ಮಧ್ಯಾಹ್ನ 12:10 ರಿಂದ 12:35 ರ ಶುಭ ಕುಂಭ ಲಗ್ನದಲ್ಲಿ",
+
+  // Events & Badges
+  "Main Event": "ಮುಖ್ಯ ಸಮಾರಂಭ",
+  "Main Event • Day 1": "ಮುಖ್ಯ ಸಮಾರಂಭ • ದಿನ ೧",
+  "Wedding Reception (Main Event)": "ವಿವಾಹ ಸ್ವಾಗತ ಸಮಾರಂಭ (ಮುಖ್ಯ ಸಮಾರಂಭ)",
+  "Reception": "ಸ್ವಾಗತ ಸಮಾರಂಭ",
+  "Wedding Reception": "ವಿವಾಹ ಸ್ವಾಗತ ಸಮಾರಂಭ",
+  "Muhurtham": "ಶುಭ ಮುಹೂರ್ತ",
+  "Shubha Muhurtham": "ಶುಭ ಮುಹೂರ್ತ",
+  "Countdown to Reception": "ಸ್ವಾಗತ ಸಮಾರಂಭಕ್ಕೆ ಕ್ಷಣಗಣನೆ",
+  "Countdown to Muhurtham": "ಶುಭ ಮುಹೂರ್ತಕ್ಕೆ ಕ್ಷಣಗಣನೆ",
+  "Countdown to the Celebration": "ಸಮಾರಂಭಕ್ಕೆ ಕ್ಷಣಗಣನೆ",
+  "View Reception Details & Timer": "ಸ್ವಾಗತ ಸಮಾರಂಭದ ವಿವರಗಳು & ಕ್ಷಣಗಣನೆ →",
+  "View Muhurtham Details & Timer": "ಶುಭ ಮುಹೂರ್ತದ ವಿವರಗಳು & ಕ್ಷಣಗಣನೆ →",
+  "View Main Event & Live Timer →": "ಮುಖ್ಯ ಸಮಾರಂಭ & ಕ್ಷಣಗಣನೆ ವೀಕ್ಷಿಸಿ →",
+  "Back to Details": "← ವಿವರಗಳ ಪುಟ",
+  "Switch to Muhurtham": "ಮುಹೂರ್ತದ ಪುಟ →",
+  "Switch to Reception": "ಸ್ವಾಗತ ಸಮಾರಂಭದ ಪುಟ →",
+  "Ceremony Highlights": "ಮುಖ್ಯ ಆಚರಣೆಗಳು",
+  "Wedding Feast": "ಸಾಂಪ್ರದಾಯಿಕ ಮದುವೆ ಊಟ",
+
+  // Family & Blessings
+  "P Masthachar Family": "ಪಿ ಮಾಸ್ತಾಚಾರ್ ಕುಟುಂಬ",
+  "P Masthachar family invites...": "ಪಿ ಮಾಸ್ತಾಚಾರ್ ಕುಟುಂಬದ ಆಮಂತ್ರಿಣ . . .",
+  "In sacred memory of Late Smt. Puttathayamma & Late Sri Masthachar P": "ಕೀ॥ಶೇ॥ ಶ್ರೀಮತಿ ಪುಟ್ಟತಾಯಮ್ಮ ಮತ್ತು ಕೀ॥ಶೇ॥ ಶ್ರೀ ಮಾಸ್ತಾಚಾರ್ ಪಿ ಅವರ ಆಶೀರ್ವಾದದೊಂದಿಗೆ",
+  "Smt. Leela K and Sri Nagendra Kumar M": "ಶ್ರೀಮತಿ ಲೀಲಾ ಕೆ ಮತ್ತು ಶ್ರೀ ನಾಗೇಂದ್ರ ಕುಮಾರ್ ಎಂ",
+  "Smt. Leela K & Sri Nagendra Kumar M": "ಶ್ರೀಮತಿ ಲೀಲಾ ಕೆ ಮತ್ತು ಶ್ರೀ ನಾಗೇಂದ್ರ ಕುಮಾರ್ ಎಂ",
+  "Rithvik Nag": "ರಿತ್ವಿಕ್ ನಾಗ್",
+  "Smt. Sudhamani M J & Sri Sanjeevachar K": "ಶ್ರೀಮತಿ ಸುಧಾಮಣಿ ಎಂ ಜೆ ಮತ್ತು ಶ್ರೀ ಸಂಜೀವಾಚಾರ್ ಕೆ",
+  "Smt. Sudhamani M J and Sri Sanjeevachar K": "ಶ್ರೀಮತಿ ಸುಧಾಮಣಿ ಎಂ ಜೆ ಮತ್ತು ಶ್ರೀ ಸಂಜೀವಾಚಾರ್ ಕೆ",
+
+  // Venues
+  "Vinayaka Convention Hall, Mysore": "ವಿನಾಯಕ ಕನ್ವೆನ್ಷನ್ ಹಾಲ್, ಮೈಸೂರು",
+  "Vinayaka Convention Hall, Paduvarahalli, Vinayaka Nagar, Mysore - 570012": "ವಿನಾಯಕ ಕನ್ವೆನ್ಷನ್ ಹಾಲ್, ಪಡುವಾರ ಹಳ್ಳಿ, ವಿನಾಯಕ ನಗರ, ಮೈಸೂರು - 570012",
+  "Nag Home, Vijayanagar 2nd Stage, Mysore": "ನಾಗ್ ನಿವಾಸ, ವಿಜಯನಗರ ೨ನೇ ಹಂತ, ಮೈಸೂರು",
+  "Hotel Kalyani, Ring Road, Mysore": "ಹೋಟೆಲ್ ಕಲ್ಯಾಣಿ, ರಿಂಗ್ ರಸ್ತೆ, ಮೈಸೂರು",
+
+  // Navigation
+  "Welcome": "ಸುಸ್ವಾಗತ",
+  "Invitation": "ಆಮಂತ್ರಣ",
+  "Details": "ವಿವರಗಳು",
+  "Language": "ಭಾಷೆ",
+
+  // Details
+  "Wedding details": "ವಿವಾಹದ ಕಾರ್ಯಕ್ರಮ ವಿವರಗಳು",
+  "Venue": "ವಿವಾಹ ಸ್ಥಳ",
+  "Dress code": "ಉಡುಪಿನ ಶೈಲಿ"
+};
+
+function resolveTrans(input, lang = 'en') {
+  if (!input) return '';
+  if (typeof input === 'object') {
+    if (lang === 'kn' && input.kn) return input.kn;
+    return input.en || input.kn || '';
+  }
+  const text = String(input).trim();
+  if (lang === 'en') return text;
+  if (translations[text]) return translations[text];
+  return text;
+}
+
+const weddingInfo = {
+  invocation: {
+    en: "|| Sri Vishwakarma Parabrahmane Namaha ||",
+    kn: "|| ಶ್ರೀ ವಿಶ್ವಕರ್ಮ ಪರಬ್ರಹ್ಮಣೇ ನಮಃ ||"
+  },
+  family: {
+    en: "P Masthachar Family",
+    kn: "ಪಿ ಮಾಸ್ತಾಚಾರ್ ಕುಟುಂಬ"
+  },
+  grandparents: {
+    en: "In sacred memory of Late Smt. Puttathayamma & Late Sri Masthachar P",
+    kn: "ಕೀ॥ಶೇ॥ ಶ್ರೀಮತಿ ಪುಟ್ಟತಾಯಮ್ಮ ಮತ್ತು ಕೀ॥ಶೇ॥ ಶ್ರೀ ಮಾಸ್ತಾಚಾರ್ ಪಿ ಅವರ ಆಶೀರ್ವಾದದೊಂದಿಗೆ"
+  },
+  brideParents: {
+    en: "Smt. Leela K & Sri Nagendra Kumar M",
+    kn: "ಶ್ರೀಮತಿ ಲೀಲಾ ಕೆ ಮತ್ತು ಶ್ರೀ ನಾಗೇಂದ್ರ ಕುಮಾರ್ ಎಂ"
+  },
+  groomParents: {
+    en: "Smt. Sudhamani M J & Sri Sanjeevachar K",
+    kn: "ಶ್ರೀಮತಿ ಸುಧಾಮಣಿ ಎಂ ಜೆ ಮತ್ತು ಶ್ರೀ ಸಂಜೀವಾಚಾರ್ ಕೆ"
+  },
+  brother: {
+    en: "Rithvik Nag",
+    kn: "ರಿತ್ವಿಕ್ ನಾಗ್"
+  },
+  bride: { en: "Prajwala Nag", kn: "ಪ್ರಜ್ವಲಾ ನಾಗ್" },
+  groom: { en: "Shravan Kumar S", kn: "ಶ್ರವಣ್ ಕುಮಾರ್ ಎಸ್" },
+  datesCombined: { en: "13 & 14 December 2026", kn: "13 ಮತ್ತು 14 ಡಿಸೆಂಬರ್ 2026" },
+  venue: { en: "Vinayaka Convention Hall, Mysore", kn: "ವಿನಾಯಕ ಕನ್ವೆನ್ಷನ್ ಹಾಲ್, ಮೈಸೂರು" },
+  venueFull: {
+    en: "Vinayaka Convention Hall, Paduvarahalli, Vinayaka Nagar, Mysore - 570012",
+    kn: "ವಿನಾಯಕ ಕನ್ವೆನ್ಷನ್ ಹಾಲ್, ಪಡುವಾರ ಹಳ್ಳಿ, ವಿನಾಯಕ ನಗರ, ಮೈಸೂರು - 570012"
+  },
+  venueMapUrl: "https://maps.google.com/?q=Vinayaka+Convention+Hall+Paduvarahalli+Mysore",
+  homeAddress: {
+    en: "#1988, 15th Main, Vijayanagar 2nd Stage, Mysuru - 570017",
+    kn: "#೧೯೮೮, ೧೫ನೇ ಮುಖ್ಯರಸ್ತೆ, ವಿಜಯನಗರ ೨ನೇ ಹಂತ, ಮೈಸೂರು - ೫೭೦೦೧೭"
+  },
+  contacts: [
+    { name: { en: "Nagendra Kumar M", kn: "ನಾಗೇಂದ್ರ ಕುಮಾರ್ ಎಂ" }, phone: "9448054124" },
+    { name: { en: "Leela K", kn: "ಲೀಲಾ ಕೆ" }, phone: "9480381042" },
+    { name: { en: "Rithvik Nag", kn: "ರಿತ್ವಿಕ್ ನಾಗ್" }, phone: "8073850081" }
+  ],
+  specialAppeal: {
+    messageEn: "PLEASE Don't Waste Food, Respect Food | Take What You Want, EAT WHAT YOU TAKE",
+    messageKn: "ದಯವಿಟ್ಟು ಆಹಾರವನ್ನು ವ್ಯರ್ಥ ಮಾಡಬೇಡಿ, ಆಹಾರವನ್ನು ಗೌರವಿಸಿ | ನಿಮಗೆ ಬೇಕಾದ್ದನ್ನು ತೆಗೆದುಕೊಳ್ಳಿ, ತೆಗೆದುಕೊಂಡದ್ದನ್ನು ತಿನ್ನಿ"
+  },
+  wishesFrom: [
+    {
+      name: { en: "Nag DIGITAL NETWORK", kn: "ನಾಗ್ ಡಿಜಿಟಲ್ ನೆಟ್ವರ್ಕ್" },
+      desc: { en: "FTTH Cable TV Broadband Internet", kn: "ಕೇಬಲ್ ಟಿವಿ & ಬ್ರಾಡ್‌ಬ್ಯಾಂಡ್ ಇಂಟರ್ನೆಟ್" },
+      phone: "9448054124"
+    },
+    {
+      name: { en: "ADVIKA ARCHITECTURE DESIGN STUDIO", kn: "ಅದ್ವಿಕಾ ಆರ್ಕಿಟೆಕ್ಚರ್ ಡಿಸೈನ್ ಸ್ಟುಡಿಯೋ" },
+      desc: { en: "Architecture & Interior Design", kn: "ವಾಸ್ತುಶಿಲ್ಪ ಮತ್ತು ಇಂಟೀರಿಯರ್ ವಿನ್ಯಾಸ" },
+      phone: "8073735532"
+    }
+  ]
+};
+
+const chapparaDetails = {
+  title: { en: "Chappara Pooja & Arishina Shastra", kn: "ಛಪ್ಪರ ಪೂಜೆ & ಅರಿಶಿನ ಶಾಸ್ತ್ರ" },
+  date: { en: "Friday, 11 December 2026", kn: "ಶುಕ್ರವಾರ, 11 ಡಿಸೆಂಬರ್ 2026" },
+  time: { en: "9:00 am to 12:30 pm (Lunch at 1:00 pm)", kn: "ಬೆಳಿಗ್ಗೆ 9:00 ರಿಂದ 12:30 (ಮಧ್ಯಾಹ್ನ 1:00 ಕ್ಕೆ ಊಟ)" },
+  venueAddress: { en: "Nag Home, #1988, 15th Main, Vijayanagar 2nd Stage, Mysore - 570017", kn: "ನಾಗ್ ನಿವಾಸ, #೧೯೮೮, ೧೫ನೇ ಮುಖ್ಯರಸ್ತೆ, ವಿಜಯನಗರ ೨ನೇ ಹಂತ, ಮೈಸೂರು - ೫೭೦೦೧೭" },
+  mapUrl: "https://maps.google.com/?q=1988+15th+Main+Vijayanagar+2nd+Stage+Mysuru"
+};
+
+const sangeethaDetails = {
+  title: { en: "Sangeetha Sanje", kn: "ಸಂಗೀತ ಸಂಜೆ" },
+  date: { en: "Saturday, 12 December 2026", kn: "ಶನಿವಾರ, 12 ಡಿಸೆಂಬರ್ 2026" },
+  time: { en: "6:30 pm to 9:30 pm (Followed by Dinner)", kn: "ಸಂಜೆ 6:30 ರಿಂದ 9:30 (ನಂತರ ರಾತ್ರಿ ಭೋಜನ)" },
+  venueAddress: { en: "Hotel Kalyani, #120/1, Ring Road, Near Bharath Cancer Hospital, Mysore - 570017", kn: "ಹೋಟೆಲ್ ಕಲ್ಯಾಣಿ, #೧೨೦/೧, ರಿಂಗ್ ರಸ್ತೆ, ಭಾರತ್ ಕ್ಯಾನ್ಸರ್ ಆಸ್ಪತ್ರೆ ಹತ್ತಿರ, ಮೈಸೂರು - ೫೭೦೦೧೭" },
+  mapUrl: "https://maps.google.com/?q=Hotel+Kalyani+Ring+Road+Mysore"
+};
+
+const receptionDetails = {
+  title: { en: "Wedding Reception", kn: "ವಿವಾಹ ಸ್ವಾಗತ ಸಮಾರಂಭ" },
+  date: { en: "Sunday, 13 December 2026", kn: "ಭಾನುವಾರ, 13 ಡಿಸೆಂಬರ್ 2026" },
+  time: { en: "7:00 pm onwards", kn: "ಸಂಜೆ 7:00 ರಿಂದ" },
+  devathaKaryaTime: { en: "Devatha Karya at 4:00 pm", kn: "ದೇವತಾ ಕಾರ್ಯಗಳು ಸಂಜೆ 4:00 ಕ್ಕೆ" },
+  targetIso: "2026-12-13T19:00:00",
+  venue: { en: "Vinayaka Convention Hall, Mysore", kn: "ವಿನಾಯಕ ಕನ್ವೆನ್ಷನ್ ಹಾಲ್, ಮೈಸೂರು" },
+  venueAddress: { en: "Paduvarahalli, Vinayaka Nagar, Mysore - 570012", kn: "ಪಡುವಾರ ಹಳ್ಳಿ, ವಿನಾಯಕ ನಗರ, ಮೈಸೂರು - 570012" },
+  mapUrl: "https://maps.google.com/?q=Vinayaka+Convention+Hall+Paduvarahalli+Mysore",
+  dressCode: { en: "Traditional Festive / Indo-Western", kn: "ಸಾಂಪ್ರದಾಯಿಕ ಹಬ್ಬದ ಉಡುಪು ಅಥವಾ ಇಂಡೋ-ವೆಸ್ಟರ್ನ್" },
+  highlights: [
+    { en: "4:00 pm • Devatha Karya Puja Rituals", kn: "ಸಂಜೆ 4:00 • ಪವಿತ್ರ ದೇವತಾ ಕಾರ್ಯಗಳ ಪೂಜಾವಿಧಾನ" },
+    { en: "7:00 pm • Grand Reception & Couple Felicitation", kn: "ಸಂಜೆ 7:00 • ವೈಭವದ ಆರತಕ್ಷತೆ ಮತ್ತು ವಧು-ವರರ ಸನ್ಮಾನ" },
+    { en: "Live Music & Celebratory Dinner", kn: "ಸಂಗೀತ ಸಡಗರ ಹಾಗೂ ಮೃಷ್ಟಾನ್ನ ಭೋಜನ" }
+  ]
+};
+
+const muhurthamDetails = {
+  title: { en: "Shubha Muhurtham", kn: "ಶುಭ ಮುಹೂರ್ತ" },
+  date: { en: "Monday, 14 December 2026", kn: "ಸೋಮವಾರ, 14 ಡಿಸೆಂಬರ್ 2026" },
+  time: { en: "12:10 pm to 12:35 pm (Kumbha Lagna)", kn: "ಮಧ್ಯಾಹ್ನ 12:10 ರಿಂದ 12:35 ರ ಶುಭ ಕುಂಭ ಲಗ್ನದಲ್ಲಿ" },
+  targetIso: "2026-12-14T12:10:00",
+  panchanga: {
+    en: "Swasti Sri Vijayabhyudaya Shalivahana Shaka Year 1948, Sri Parabhava Samvatsara, Margashira Shukla Panchami",
+    kn: "ಸ್ವಸ್ತಿಶ್ರೀ ವಿಜಯಾಭ್ಯುದಯ ಶಾಲಿವಾಹನಶಕ ವರ್ಷಂಗಳು 1948ನೇ ಶ್ರೀ ಪರಾಭವ ಸಂವತ್ಸರದ ಮಾರ್ಗಶಿರ ಶುಕ್ಲ ಪಂಚಮಿ"
+  },
+  venue: { en: "Vinayaka Convention Hall, Mysore", kn: "ವಿನಾಯಕ ಕನ್ವೆನ್ಷನ್ ಹಾಲ್, ಮೈಸೂರು" },
+  venueAddress: { en: "Paduvarahalli, Vinayaka Nagar, Mysore - 570012", kn: "ಪಡುವಾರ ಹಳ್ಳಿ, ವಿನಾಯಕ ನಗರ, ಮೈಸೂರು - 570012" },
+  mapUrl: "https://maps.google.com/?q=Vinayaka+Convention+Hall+Paduvarahalli+Mysore",
+  dressCode: { en: "Traditional Silk Saree / Dhoti (Traditional Attire)", kn: "ಸಾಂಪ್ರದಾಯಿಕ ರೇಷ್ಮೆ ಸೀರೆ / ಪಂಚೆ ಶಲ್ಯ" },
+  highlights: [
+    { en: "Kanyadaana & Vedic Vivaha Mantras", kn: "ಕನ್ಯಾದಾನ ಹಾಗೂ ವೈದಿಕ ವಿವಾಹ ಮಂತ್ರಘೋಷ" },
+    { en: "Mangalya Dharane & Akshataropana (12:10 - 12:35 pm)", kn: "ಮಾಂಗಲ್ಯ ಧಾರಣೆ ಹಾಗೂ ಅಕ್ಷತಾರೋಪಣ (12:10 - 12:35 pm)" },
+    { en: "Sapthapadi & Traditional Banana Leaf Feast", kn: "ಸಪ್ತಪದಿ ಹಾಗೂ ಬಾಳೆ ಎಲೆಯ ಸಾಂಪ್ರದಾಯಿಕ ಮದುವೆ ಭೋಜನ" }
+  ]
+};
+
+function CountdownTimer({ targetDate, title, compact = false, lang = 'en' }) {
+  const calculateTimeLeft = () => {
+    const diff = new Date(targetDate).getTime() - Date.now();
+    if (diff <= 0) return { days: 0, hours: 0, minutes: 0, seconds: 0, isCompleted: true };
+    return {
+      days: Math.floor(diff / (1000 * 60 * 60 * 24)),
+      hours: Math.floor((diff / (1000 * 60 * 60)) % 24),
+      minutes: Math.floor((diff / 1000 / 60) % 60),
+      seconds: Math.floor((diff / 1000) % 60),
+      isCompleted: false
+    };
+  };
+
+  const [timeLeft, setTimeLeft] = useState(calculateTimeLeft);
+
+  useEffect(() => {
+    const timer = setInterval(() => setTimeLeft(calculateTimeLeft()), 1000);
+    return () => clearInterval(timer);
+  }, [targetDate]);
+
+  if (timeLeft.isCompleted) {
+    return (
+      <div className={`countdown-box ${compact ? 'compact' : ''} completed`}>
+        <div className="countdown-complete-msg">
+          🎉 {lang === 'kn' ? 'ಸಮಾರಂಭ ಪ್ರಾರಂಭವಾಗಿದೆ!' : 'The Celebration has Begun!'} 🎉
+        </div>
+      </div>
+    );
+  }
+
+  const pad = (n) => String(n).padStart(2, '0');
+
+  return (
+    <div className={`countdown-box ${compact ? 'compact' : ''}`}>
+      {title && (
+        <div className="countdown-title">
+          <span className="countdown-icon">⏳</span> {resolveTrans(title, lang)}
+        </div>
+      )}
+      <div className="countdown-grid">
+        <div className="countdown-unit">
+          <div className="countdown-num">{timeLeft.days}</div>
+          <div className="countdown-lbl">{lang === 'kn' ? 'ದಿನಗಳು' : 'Days'}</div>
+        </div>
+        <div className="countdown-sep">:</div>
+        <div className="countdown-unit">
+          <div className="countdown-num">{pad(timeLeft.hours)}</div>
+          <div className="countdown-lbl">{lang === 'kn' ? 'ಗಂಟೆಗಳು' : 'Hours'}</div>
+        </div>
+        <div className="countdown-sep">:</div>
+        <div className="countdown-unit">
+          <div className="countdown-num">{pad(timeLeft.minutes)}</div>
+          <div className="countdown-lbl">{lang === 'kn' ? 'ನಿಮಿಷಗಳು' : 'Mins'}</div>
+        </div>
+        <div className="countdown-sep">:</div>
+        <div className="countdown-unit">
+          <div className="countdown-num">{pad(timeLeft.seconds)}</div>
+          <div className="countdown-lbl">{lang === 'kn' ? 'ಸೆಕೆಂಡುಗಳು' : 'Secs'}</div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function App() {
+  const [lang, setLang] = useState(() => localStorage.getItem('wedding_lang') || 'en');
+  const [langModalOpen, setLangModalOpen] = useState(() => !localStorage.getItem('wedding_lang'));
+  const [page, setPage] = useState('welcome');
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  // Photo Stack State (4 Couple Photos in order)
+  const [cards, setCards] = useState([
     {
       id: 1,
-      title: "The Engagement",
-      sub: "A promise of forever",
-      src: "https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=800&q=80"
+      src: "./public/photos/stack-1-celebration.jpg",
+      objectPosition: "center 18%",
+      title: { en: "Celebration of Love", kn: "ಪ್ರೀತಿಯ ಸಂಭ್ರಮ" },
+      sub: { en: "Prajwala & Shravan", kn: "ಪ್ರಜ್ವಲಾ ಮತ್ತು ಶ್ರವಣ್" }
     },
     {
       id: 2,
-      title: "Jaipur Sunset",
-      sub: "Golden hour memories",
-      src: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=80"
+      src: "./public/photos/stack-2-hands.jpg",
+      objectPosition: "center 35%",
+      title: { en: "The Sacred Promise", kn: "ಪವಿತ್ರ ಬಂಧನ" },
+      sub: { en: "Holding Hands into Forever", kn: "ಕೈಹಿಡಿದು ಜೊತೆಯಾಗಿ" }
     },
     {
       id: 3,
-      title: "Pre-Wedding Stroll",
-      sub: "Walking together",
-      src: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=800&q=80"
+      src: "./public/photos/stack-3-garden.jpg",
+      objectPosition: "center 40%",
+      title: { en: "Moments of Serenity", kn: "ಪ್ರಶಾಂತ ಕ್ಷಣಗಳು" },
+      sub: { en: "In Every Glance", kn: "ಪ್ರತಿ ನೋಟದಲ್ಲೂ ಒಲವು" }
     },
     {
       id: 4,
-      title: "Ring Ceremony",
-      sub: "Sealed with love",
-      src: "https://images.unsplash.com/photo-1606800052052-a08af7148866?auto=format&fit=crop&w=800&q=80"
-    },
-    {
-      id: 5,
-      title: "Sangeet & Laughter",
-      sub: "Music and celebration",
-      src: "https://images.unsplash.com/photo-1532712938310-34cb3982ef74?auto=format&fit=crop&w=800&q=80"
-    },
-    {
-      id: 6,
-      title: "Together Forever",
-      sub: "Two hearts, one soul",
-      src: "https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&w=800&q=80"
+      src: "./public/photos/stack-4-embrace.jpg",
+      objectPosition: "center 22%",
+      title: { en: "Two Hearts, One Soul", kn: "ಎರಡು ಮನಸು, ಒಂದು ಬಂಧ" },
+      sub: { en: "Beginning of Our Forever", kn: "ಹೊಸ ಪಯಣದ ಆರಂಭ" }
     }
-  ];
+  ]);
+  const [topCardStyle, setTopCardStyle] = useState({});
+  const [isDragging, setIsDragging] = useState(false);
+  const dragRef = useRef({ isDown: false, startX: 0, currentX: 0, startTime: 0 });
+  const isTransitioningRef = useRef(false);
+  const stackAngles = [0, -4, 3.5, -2.5];
 
-  // Sync with window.location.hash
+  // Envelope State
+  const [envelopeState, setEnvelopeState] = useState({ open: false, out: false });
+  const [confetti, setConfetti] = useState([]);
+
   useEffect(() => {
     const handleHash = () => {
-      const hash = window.location.hash.slice(1);
-      const valid = ['welcome', 'home', 'story', 'details', 'gallery', 'family'];
-      const target = valid.includes(hash) ? hash : 'welcome';
-      setPage(target);
-      setNavOpen(false);
-      window.scrollTo(0, 0);
-
-      if (target !== 'home') {
-        setEnvelopeState({ open: false, out: false });
-      }
+      const h = (window.location.hash || '#welcome').replace('#', '');
+      const valid = ['welcome', 'home', 'details', 'reception', 'muhurtham'];
+      if (valid.includes(h)) setPage(h);
     };
-
-    handleHash();
     window.addEventListener('hashchange', handleHash);
+    handleHash();
     return () => window.removeEventListener('hashchange', handleHash);
   }, []);
 
-  const navigateTo = (target) => {
-    window.location.hash = target;
+  const selectLanguage = (newLang) => {
+    setLang(newLang);
+    localStorage.setItem('wedding_lang', newLang);
+    setLangModalOpen(false);
   };
 
-  const handleEnvelopeClick = () => {
-    if (envelopeState.open) return;
-    setEnvelopeState({ open: true, out: false });
+  const toggleLanguage = () => {
+    const next = lang === 'en' ? 'kn' : 'en';
+    setLang(next);
+    localStorage.setItem('wedding_lang', next);
+  };
 
+  const t = (k) => resolveTrans(k, lang);
+
+  const navigateTo = (pg) => {
+    window.location.hash = '#' + pg;
+    setPage(pg);
+    setMenuOpen(false);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const nextCard = (direction = 1) => {
+    if (isTransitioningRef.current) return;
+    isTransitioningRef.current = true;
+    const exitX = direction >= 0 ? 140 : -140;
+    const exitRot = direction >= 0 ? 25 : -25;
+    setTopCardStyle({
+      transform: `translateX(${exitX}%) rotate(${exitRot}deg)`,
+      opacity: 0,
+      transition: 'transform 0.4s ease, opacity 0.4s ease'
+    });
     setTimeout(() => {
-      setEnvelopeState({ open: true, out: true });
-      triggerBurst();
-    }, 750);
-  };
-
-  const triggerBurst = () => {
-    const petals = [];
-    for (let i = 0; i < 30; i++) {
-      const angle = Math.random() * 6.28;
-      const dist = 110 + Math.random() * 170;
-      petals.push({
-        id: Math.random(),
-        x: Math.cos(angle) * dist,
-        y: Math.sin(angle) * dist - 70,
-        bg: i % 3 ? '#c8942e' : '#e08a9a',
-        delay: Math.random() * 0.25
+      setCards((prev) => {
+        const next = [...prev];
+        next.push(next.shift());
+        return next;
       });
-    }
-    setConfetti(petals);
-    setTimeout(() => setConfetti([]), 2300);
+      setTopCardStyle({});
+      isTransitioningRef.current = false;
+    }, 420);
   };
-
-  const stackAngles = [0, -4, 3.5, -2.5];
 
   const handlePointerDown = (e) => {
-    dragRef.current = {
-      isDown: true,
-      startX: e.clientX,
-      currentX: 0
-    };
+    if (isTransitioningRef.current) return;
+    dragRef.current = { isDown: true, startX: e.clientX, currentX: 0, startTime: Date.now() };
     setIsDragging(true);
   };
 
   const handlePointerMove = (e) => {
-    if (!dragRef.current.isDown) return;
+    if (!dragRef.current.isDown || isTransitioningRef.current) return;
     const dx = e.clientX - dragRef.current.startX;
     dragRef.current.currentX = dx;
-    setTopCardStyle({
-      transform: `translateX(${dx}px) rotate(${dx / 18}deg)`
-    });
+    setTopCardStyle({ transform: `translateX(${dx}px) rotate(${dx / 18}deg)` });
   };
 
   const handlePointerUp = () => {
     if (!dragRef.current.isDown) return;
     dragRef.current.isDown = false;
     setIsDragging(false);
-    const dx = dragRef.current.currentX;
+    if (isTransitioningRef.current) return;
 
-    if (Math.abs(dx) > 70) {
-      setTopCardStyle({
-        transform: `translateX(${dx > 0 ? 140 : -140}%) rotate(${dx > 0 ? 25 : -25}deg)`,
-        opacity: 0,
-        transition: 'transform 0.4s ease, opacity 0.4s ease'
-      });
-      setTimeout(() => {
-        setCards(prev => {
-          const next = [...prev];
-          next.push(next.shift());
-          return next;
-        });
-        setTopCardStyle({});
-      }, 420);
+    const dx = dragRef.current.currentX;
+    const elapsed = Date.now() - dragRef.current.startTime;
+
+    if (Math.abs(dx) > 40) {
+      nextCard(dx > 0 ? 1 : -1);
+    } else if (Math.abs(dx) < 15 && elapsed < 600) {
+      nextCard(1);
     } else {
       setTopCardStyle({});
     }
   };
 
+  const handleCardClick = () => {
+    if (!isTransitioningRef.current && Math.abs(dragRef.current.currentX) < 10) {
+      nextCard(1);
+    }
+  };
+
+  const openEnvelope = () => {
+    if (envelopeState.open) return;
+    setEnvelopeState({ open: true, out: false });
+    setTimeout(() => {
+      setEnvelopeState({ open: true, out: true });
+      const pts = [];
+      for (let i = 0; i < 30; i++) {
+        const a = Math.random() * 6.28;
+        const d = 110 + Math.random() * 170;
+        pts.push({
+          id: Math.random(),
+          x: Math.cos(a) * d,
+          y: Math.sin(a) * d - 70,
+          bg: i % 3 ? '#c8942e' : '#e08a9a',
+          delay: Math.random() * 0.25
+        });
+      }
+      setConfetti(pts);
+      setTimeout(() => setConfetti([]), 2300);
+    }, 750);
+  };
+
   return (
     <div>
-      {/* Navbar */}
-      <nav className="navbar navbar-expand-md sticky-top" aria-label="Pages">
+      {/* NAVBAR */}
+      <nav className="navbar">
         <div className="container">
           <a className="navbar-brand" href="#welcome" onClick={(e) => { e.preventDefault(); navigateTo('welcome'); }}>
-            P & S
+            <img src="./public/logos/ps-monogram-gold.png" alt="P & S" className="navbar-monogram-icon" />
+            <span>{lang === 'kn' ? 'ಪ್ರ & ಶ್ರ' : 'P & S'}</span>
           </a>
+
+          <button
+            type="button"
+            className="nav-lang-pill nav-lang-mobile"
+            onClick={toggleLanguage}
+            title={lang === 'en' ? 'ಕನ್ನಡಕ್ಕೆ ಬದಲಾಯಿಸಿ' : 'Switch to English'}
+          >
+            <span className="lang-globe">🌐</span>
+            <span className={lang === 'en' ? 'active-lang' : ''}>EN</span>
+            <span className="lang-sep">|</span>
+            <span className={lang === 'kn' ? 'active-lang' : ''}>ಕನ್ನಡ</span>
+          </button>
+
           <button
             className="navbar-toggler"
             type="button"
-            aria-label="Toggle menu"
-            onClick={() => setNavOpen(!navOpen)}
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-label="Toggle navigation"
           >
             <span className="navbar-toggler-icon"></span>
           </button>
-          <div className={`collapse navbar-collapse ${navOpen ? 'show' : ''}`} id="nv">
-            <ul className="navbar-nav ms-auto">
+
+          <div className={`navbar-collapse ${menuOpen ? 'show' : ''}`} id="navContent">
+            <ul className="navbar-nav me-auto">
               <li className="nav-item">
-                <a
-                  className={`nav-link ${page === 'home' ? 'active' : ''}`}
-                  href="#home"
-                  onClick={(e) => { e.preventDefault(); navigateTo('home'); }}
-                >
-                  Invitation
+                <a className={`nav-link ${page === 'home' ? 'active' : ''}`} href="#home" onClick={(e) => { e.preventDefault(); navigateTo('home'); }}>
+                  {t('Invitation')}
                 </a>
               </li>
               <li className="nav-item">
-                <a
-                  className={`nav-link ${page === 'story' ? 'active' : ''}`}
-                  href="#story"
-                  onClick={(e) => { e.preventDefault(); navigateTo('story'); }}
-                >
-                  Our story
+                <a className={`nav-link ${page === 'details' ? 'active' : ''}`} href="#details" onClick={(e) => { e.preventDefault(); navigateTo('details'); }}>
+                  {t('Details')}
                 </a>
               </li>
               <li className="nav-item">
-                <a
-                  className={`nav-link ${page === 'details' ? 'active' : ''}`}
-                  href="#details"
-                  onClick={(e) => { e.preventDefault(); navigateTo('details'); }}
-                >
-                  Details
+                <a className={`nav-link ${page === 'reception' ? 'active' : ''}`} href="#reception" onClick={(e) => { e.preventDefault(); navigateTo('reception'); }}>
+                  🌟 {lang === 'kn' ? 'ಆರತಕ್ಷತೆ' : 'Reception'}
                 </a>
               </li>
               <li className="nav-item">
-                <a
-                  className={`nav-link ${page === 'gallery' ? 'active' : ''}`}
-                  href="#gallery"
-                  onClick={(e) => { e.preventDefault(); navigateTo('gallery'); }}
-                >
-                  Gallery
-                </a>
-              </li>
-              <li className="nav-item">
-                <a
-                  className={`nav-link ${page === 'family' ? 'active' : ''}`}
-                  href="#family"
-                  onClick={(e) => { e.preventDefault(); navigateTo('family'); }}
-                >
-                  Family
+                <a className={`nav-link ${page === 'muhurtham' ? 'active' : ''}`} href="#muhurtham" onClick={(e) => { e.preventDefault(); navigateTo('muhurtham'); }}>
+                  ॐ {lang === 'kn' ? 'ಮುಹೂರ್ತ' : 'Muhurtham'}
                 </a>
               </li>
             </ul>
+
+            <button
+              type="button"
+              className="nav-lang-pill nav-lang-desktop"
+              onClick={toggleLanguage}
+              title={lang === 'en' ? 'ಕನ್ನಡಕ್ಕೆ ಬದಲಾಯಿಸಿ' : 'Switch to English'}
+            >
+              <span className="lang-globe">🌐</span>
+              <span className={lang === 'en' ? 'active-lang' : ''}>EN</span>
+              <span className="lang-sep">|</span>
+              <span className={lang === 'kn' ? 'active-lang' : ''}>ಕನ್ನಡ</span>
+            </button>
           </div>
         </div>
       </nav>
@@ -251,11 +528,15 @@ function App() {
                   left: `${(i * 19) % 100}%`,
                   width: `${6 + (i % 6)}px`,
                   height: `${6 + (i % 6)}px`,
-                  animationDuration: `${7 + (i % 7)}s`,
-                  animationDelay: `${-(i * 1.2)}s`
+                  animationDuration: `${7 + (i % 5)}s`,
+                  animationDelay: `${-(i * 1.5)}s`
                 }}
               />
             ))}
+
+            <p className="welcome-invocation" style={{ animationDelay: '0.4s' }}>
+              {t(weddingInfo.invocation)}
+            </p>
 
             <div className="duo">
               {Array.from({ length: 10 }).map((_, i) => (
@@ -274,19 +555,31 @@ function App() {
               ))}
 
               <figure className="ph">
-                <div className="img">Bride’s photo</div>
-                <figcaption>Prajwala</figcaption>
+                <div className="img">
+                  <img src="./public/photos/bride-portrait.jpg" alt="Prajwala Nag" className="couple-avatar" />
+                </div>
+                <figcaption>
+                  {t(weddingInfo.bride)}
+                  <span className="degree-tag">B.Arch</span>
+                </figcaption>
               </figure>
               <div className="amp">&</div>
               <figure className="ph r">
-                <div className="img">Groom’s photo</div>
-                <figcaption>Shravan</figcaption>
+                <div className="img">
+                  <img src="./public/photos/groom-portrait.jpg" alt="Shravan Kumar S" className="couple-avatar" />
+                </div>
+                <figcaption>
+                  {t(weddingInfo.groom)}
+                  <span className="degree-tag">B.E, M.Tech</span>
+                </figcaption>
               </figure>
             </div>
 
-            <p className="t big" style={{ animationDelay: '1.7s' }}>are getting married</p>
-            <p className="t" style={{ animationDelay: '2s' }}>Sunday, 14 February 2027</p>
-            <p className="t" style={{ animationDelay: '2.4s' }}>Scroll down</p>
+            <p className="t big" style={{ animationDelay: '1.7s' }}>{t('are getting married')}</p>
+            <p className="t date-highlight" style={{ animationDelay: '2s' }}>
+              🗓️ {t(weddingInfo.datesCombined)} • {lang === 'kn' ? 'ಮೈಸೂರು' : 'Mysuru'}
+            </p>
+            <p className="t" style={{ animationDelay: '2.5s' }}>{t('Scroll down')}</p>
 
             <section className="tg">
               {Array.from({ length: 10 }).map((_, i) => (
@@ -304,61 +597,72 @@ function App() {
                 </span>
               ))}
 
-              <h2 className="sr">Two hearts, one story</h2>
+              <h2 className="sr">{t('Two hearts, one story')}</h2>
               <div className="tgw sr">
                 <div
                   className="stk"
                   id="stk"
-                  aria-label="Photos of Prajwala and Shravan. Swipe to see more."
+                  role="button"
+                  tabIndex={0}
+                  aria-label="Swipeable photos"
+                  title={lang === 'kn' ? 'ಮುಂದಿನ ಭಾವಚಿತ್ರ ನೋಡಲು ಸ್ಪರ್ಶಿಸಿ' : 'Tap to view next photo'}
                   onPointerDown={handlePointerDown}
                   onPointerMove={handlePointerMove}
                   onPointerUp={handlePointerUp}
                   onPointerCancel={handlePointerUp}
+                  onClick={handleCardClick}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      nextCard(1);
+                    }
+                  }}
                 >
                   {cards.map((card, i) => {
                     const depth = Math.min(i, 3);
                     const defaultTransform = `translateY(${depth * 14}px) scale(${1 - depth * 0.05}) rotate(${stackAngles[depth]}deg)`;
-                    const style = i === 0 && (isDragging || topCardStyle.transform)
-                      ? {
-                          zIndex: cards.length,
-                          opacity: 1,
-                          pointerEvents: 'auto',
-                          ...topCardStyle
-                        }
-                      : {
-                          zIndex: cards.length - i,
-                          opacity: i > 3 ? 0 : 1,
-                          transform: defaultTransform,
-                          pointerEvents: i === 0 ? 'auto' : 'none'
-                        };
+                    const style = (i === 0 && (isDragging || topCardStyle.transform))
+                      ? { zIndex: cards.length, opacity: 1, pointerEvents: 'auto', ...topCardStyle }
+                      : { zIndex: cards.length - i, opacity: i > 3 ? 0 : 1, transform: defaultTransform, pointerEvents: i === 0 ? 'auto' : 'none' };
 
                     return (
-                      <div
-                        key={card.id}
-                        className={`pc ${i === 0 && isDragging ? 'drag' : ''}`}
-                        style={style}
-                      >
-                        {card.text}
+                      <div key={card.id} className={`pc ${i === 0 && isDragging ? 'drag' : ''}`} style={style}>
+                        {card.src ? (
+                          <div className="pc-photo-wrapper">
+                            <img
+                              src={card.src}
+                              alt={t(card.title)}
+                              style={{ objectPosition: card.objectPosition || 'center center' }}
+                            />
+                            <div className="pc-photo-caption">
+                              <span className="pc-title">{t(card.title)}</span>
+                              {card.sub && <span className="pc-sub">{t(card.sub)}</span>}
+                            </div>
+                          </div>
+                        ) : (
+                          t(card.text)
+                        )}
                       </div>
                     );
                   })}
                 </div>
               </div>
-              <p className="sr" style={{ fontSize: '.9rem', opacity: .8, marginTop: '44px' }}>Swipe the photos</p>
-              <p className="sr big" style={{ marginTop: '24px' }}>Prajwala & Shravan</p>
-              <p className="sr">14 February 2027</p>
+              <p className="sr" style={{ fontSize: '.9rem', opacity: 0.8, marginTop: '44px' }}>
+                {lang === 'kn' ? 'ಭಾವಚಿತ್ರಗಳನ್ನು ಸ್ಪರ್ಶಿಸಿ ಅಥವಾ ಸರಿಸಿ' : 'Tap or swipe the photos'}
+              </p>
               <a
                 className="btn btn-wed sr"
                 href="#home"
                 onClick={(e) => { e.preventDefault(); navigateTo('home'); }}
+                style={{ marginTop: '20px' }}
               >
-                Open the invitation
+                {t('Open the invitation')}
               </a>
             </section>
           </section>
         )}
 
-        {/* 2. INVITATION & ENVELOPE (HOME) */}
+        {/* 2. INVITATION & ENVELOPE */}
         {page === 'home' && (
           <section
             className={`pg ${envelopeState.open ? 'open' : ''} ${envelopeState.out ? 'out' : ''}`}
@@ -371,20 +675,30 @@ function App() {
                 className="sp"
                 style={{
                   left: `${(i * 21) % 100}%`,
-                  width: `${5 + (i % 7)}px`,
-                  height: `${5 + (i % 7)}px`,
-                  animationDuration: `${7 + (i % 7)}s`,
-                  animationDelay: `${-(i * 1.4)}s`
+                  width: `${6 + (i % 6)}px`,
+                  height: `${6 + (i % 6)}px`,
+                  animationDuration: `${7 + (i % 5)}s`,
+                  animationDelay: `${-(i * 1.8)}s`
                 }}
               />
             ))}
 
             <div className="par" id="par">
-              <p>With the blessings of</p>
-              <small>Parents of Prajwala</small>
-              <p className="pn">Mr. [Father’s name] & Mrs. [Mother’s name]</p>
-              <small>Parents of Shravan</small>
-              <p className="pn">Mr. [Father’s name] & Mrs. [Mother’s name]</p>
+              <p className="par-invocation">{t(weddingInfo.invocation)}</p>
+              <p className="par-memorial"><small>{t(weddingInfo.grandparents)}</small></p>
+              <div className="par-family-banner">
+                <b>{t(weddingInfo.family)}</b>
+              </div>
+              <div className="par-parents-grid">
+                <div>
+                  <small>{lang === 'kn' ? 'ವಧುವಿನ ಪೋಷಕರು' : "Bride's Parents"}</small>
+                  <p className="pn">{t(weddingInfo.brideParents)}</p>
+                </div>
+                <div>
+                  <small>{lang === 'kn' ? 'ವರನ ಪೋಷಕರು' : "Groom's Parents"}</small>
+                  <p className="pn">{t(weddingInfo.groomParents)}</p>
+                </div>
+              </div>
             </div>
 
             <div className="stage">
@@ -393,32 +707,113 @@ function App() {
                   className={`env ${envelopeState.open ? 'open' : ''}`}
                   id="ev"
                   aria-label="Open the invitation"
-                  onClick={handleEnvelopeClick}
+                  onClick={openEnvelope}
                 >
-                  <b>P&S</b>
+                  <b className="env-seal">
+                    <img
+                      src="./public/logos/ps-monogram-maroon.png"
+                      alt="Prajwala & Shravan Monogram"
+                      className="env-seal-logo"
+                    />
+                  </b>
                 </button>
-                <p className="hint" id="hint">Tap the seal to open your invitation</p>
+                <p className="hint" id="hint">{t('Tap the seal to open your invitation')}</p>
               </div>
 
               <div className="paper" id="card">
-                <p style={{ '--d': '0.55s' }}>With the blessings of our families</p>
-                <h1 style={{ '--d': '0.68s' }}>Prajwala <i>and</i> Shravan</h1>
-                <p style={{ '--d': '0.81s' }}>invite you to celebrate their wedding</p>
-                <hr style={{ '--d': '0.94s' }} />
-                <p className="big" style={{ '--d': '1.07s' }}>Sunday, 14 February 2027</p>
-                <p style={{ '--d': '1.20s' }}>10:30 am</p>
-                <p style={{ '--d': '1.33s' }}>Mandap Lawn, Hotel Aravali, Jaipur</p>
+                <p className="card-invocation" style={{ '--d': '0.50s' }}>
+                  {t(weddingInfo.invocation)}
+                </p>
+
+                <div className="card-lead-text" style={{ '--d': '0.58s' }}>
+                  <span className="card-family-highlight">{t(weddingInfo.family)}</span>
+                  <p className="card-lead-sub">
+                    {lang === 'kn'
+                      ? 'ತಮ್ಮ ಸುಪುತ್ರಿಯ ಶುಭ ವಿವಾಹ ಮಹೋತ್ಸವಕ್ಕೆ ಸಕುಟುಂಬ ಸಮೇತರಾಗಿ ಆಗಮಿಸಲು ಕೋರುತ್ತಾರೆ'
+                      : 'cordially invite you and your family to grace the wedding of'}
+                  </p>
+                </div>
+
+                <div className="card-couple-royal" style={{ '--d': '0.68s' }}>
+                  <div className="card-person-box">
+                    <span className="card-person-name">{t(weddingInfo.bride)}</span>
+                    <span className="card-person-degree-pill">B.Arch</span>
+                  </div>
+
+                  <div className="card-conjunction-wrap">
+                    <span className="card-conjunction-flourish">❧</span>
+                    <span className="card-conjunction-text">{lang === 'kn' ? 'ಮತ್ತು' : 'with'}</span>
+                    <span className="card-conjunction-flourish">❧</span>
+                  </div>
+
+                  <div className="card-person-box">
+                    <span className="card-person-name">{t(weddingInfo.groom)}</span>
+                    <span className="card-person-degree-pill">B.E, M.Tech</span>
+                    <p className="card-groom-parents">
+                      {lang === 'kn'
+                        ? '(ಶ್ರೀಮತಿ ಸುಧಾಮಣಿ ಎಂ ಜೆ ಮತ್ತು ಶ್ರೀ ಸಂಜೀವಾಚಾರ್ ಕೆ ಇವರ ದ್ವಿತೀಯ ಪುತ್ರ)'
+                        : '(Son of Smt. Sudhamani M J & Sri Sanjeevachar K)'}
+                    </p>
+                  </div>
+                </div>
+
+                <hr className="card-ornate-divider" style={{ '--d': '0.84s' }} />
+
+                {/* RECEPTION */}
+                <div className="card-reception-gold-box" style={{ '--d': '0.94s' }}>
+                  <p className="card-event-badge-tag">
+                    ✨ {lang === 'kn' ? 'ವಿವಾಹ ಸ್ವಾಗತ ಸಮಾರಂಭ' : 'Wedding Reception'}
+                  </p>
+                  <p className="card-event-date-row">
+                    {t(receptionDetails.date)}
+                  </p>
+                  <p className="card-event-timings-row">
+                    {lang === 'kn'
+                      ? 'ದೇವತಾ ಕಾರ್ಯಗಳು ಸಂಜೆ 4:00 • ಆರತಕ್ಷತೆ ಸಂಜೆ 7:00 ರಿಂದ'
+                      : 'Devatha Karya at 4:00 pm • Reception at 7:00 pm onwards'}
+                  </p>
+                </div>
+
+                <div className="card-venue-container" style={{ '--d': '1.04s' }}>
+                  <div className="card-venue-title">
+                    🏛️ {t(weddingInfo.venue)}
+                  </div>
+                  <div className="card-venue-sub">
+                    {t(weddingInfo.venueAddress)}
+                  </div>
+                </div>
+
+                <div className="card-muhurtham-pill" style={{ '--d': '1.14s' }}>
+                  <span className="muhurtham-lamp">🪔</span>
+                  <span className="muhurtham-pill-text">
+                    {lang === 'kn'
+                      ? 'ಶುಭ ಮುಹೂರ್ತ: ಸೋಮವಾರ, 14 ಡಿಸೆಂಬರ್ 2026 • ಮಧ್ಯಾಹ್ನ 12:10 ರಿಂದ 12:35 ರ ಶುಭ ಕುಂಭ ಲಗ್ನದಲ್ಲಿ'
+                      : 'Shubha Muhurtham: Monday, 14 Dec 2026 in Kumbha Lagna (12:10 pm - 12:35 pm)'}
+                  </span>
+                </div>
+
+                <div className="card-regards-box" style={{ '--d': '1.24s' }}>
+                  <div className="card-regards-title">
+                    {lang === 'kn' ? 'ಆಹ್ವಾನಿಸುವವರು:' : 'With Warm Regards & Blessings:'}
+                  </div>
+                  <div className="card-regards-names">
+                    <span>{t(weddingInfo.brideParents)}</span>
+                    <span className="regards-sep">•</span>
+                    <span>{t(weddingInfo.brother)}</span>
+                  </div>
+                </div>
+
                 <a
                   className="btn btn-wed"
                   href="#details"
-                  style={{ '--d': '1.46s' }}
+                  style={{ '--d': '1.34s', marginTop: '16px' }}
                   onClick={(e) => { e.preventDefault(); navigateTo('details'); }}
                 >
-                  See all details
+                  {t('See all details')}
                 </a>
               </div>
 
-              {confetti.map(p => (
+              {confetti.map((p) => (
                 <span
                   key={p.id}
                   className="pt"
@@ -434,214 +829,369 @@ function App() {
           </section>
         )}
 
-        {/* 3. OUR STORY */}
-        {page === 'story' && (
-          <section className="pg" id="p-story">
-            {Array.from({ length: 8 }).map((_, i) => (
-              <span
-                key={i}
-                className="sp"
-                style={{
-                  left: `${(i * 29) % 100}%`,
-                  width: `${5 + (i % 6)}px`,
-                  height: `${5 + (i % 6)}px`,
-                  animationDuration: `${6 + (i % 6)}s`,
-                  animationDelay: `${-(i * 1.5)}s`
-                }}
-              />
-            ))}
-            <div className="paper">
-              <h2>Our story</h2>
-              <p className="note">Replace these lines with your sister’s own words.</p>
-              <ol className="tl" data-stagger>
-                <li style={{ animationDelay: '0.35s' }}>
-                  <h3>2019 · We met</h3>
-                  <p>A short line about how they first met goes here.</p>
-                </li>
-                <li style={{ animationDelay: '0.49s' }}>
-                  <h3>2025 · The proposal</h3>
-                  <p>A short line about the moment he asked goes here.</p>
-                </li>
-                <li style={{ animationDelay: '0.63s' }}>
-                  <h3>14 February 2027 · The wedding</h3>
-                  <p>Two families become one. We would love for you to be there.</p>
-                </li>
-              </ol>
-            </div>
-          </section>
-        )}
-
-        {/* 4. DETAILS */}
+        {/* 3. DETAILS (EVENTS HUB) */}
         {page === 'details' && (
           <section className="pg" id="p-details">
-            {Array.from({ length: 8 }).map((_, i) => (
-              <span
-                key={i}
-                className="sp"
-                style={{
-                  left: `${(i * 29) % 100}%`,
-                  width: `${5 + (i % 6)}px`,
-                  height: `${5 + (i % 6)}px`,
-                  animationDuration: `${6 + (i % 6)}s`,
-                  animationDelay: `${-(i * 1.5)}s`
-                }}
-              />
-            ))}
             <div className="paper">
-              <h2>Wedding details</h2>
-              <div className="list-group list-group-flush rows" data-stagger>
-                <div className="list-group-item" style={{ animationDelay: '0.35s' }}>
-                  <b>Date and time</b>Sunday, 14 February 2027, 10:30 am
-                </div>
-                <div className="list-group-item" style={{ animationDelay: '0.49s' }}>
-                  <b>Venue</b>Mandap Lawn, Hotel Aravali, Civil Lines, Jaipur<br />
-                  <span className="note">A map link can go here.</span>
-                </div>
-                <div className="list-group-item" style={{ animationDelay: '0.63s' }}>
-                  <b>Getting there</b>Parking is available at the main gate. A shuttle runs from the city centre every hour on the wedding day.
-                </div>
-                <div className="list-group-item" style={{ animationDelay: '0.77s' }}>
-                  <b>Where to stay</b>Rooms are held for guests at Hotel Aravali. Please mention the wedding when booking.
-                </div>
-                <div className="list-group-item" style={{ animationDelay: '0.91s' }}>
-                  <b>Dress code</b>Traditional attire is most welcome.
-                </div>
-              </div>
-            </div>
-          </section>
-        )}
-
-        {/* 5. ENHANCED GALLERY WITH LIGHTBOX */}
-        {page === 'gallery' && (
-          <section className="pg" id="p-gallery">
-            {Array.from({ length: 8 }).map((_, i) => (
-              <span
-                key={i}
-                className="sp"
-                style={{
-                  left: `${(i * 29) % 100}%`,
-                  width: `${5 + (i % 6)}px`,
-                  height: `${5 + (i % 6)}px`,
-                  animationDuration: `${6 + (i % 6)}s`,
-                  animationDelay: `${-(i * 1.5)}s`
-                }}
-              />
-            ))}
-            <div className="paper">
-              <h2>Gallery</h2>
-              <p className="note">Tap any photo to view in high definition</p>
-              
-              <div className="gallery-grid">
-                {galleryPhotos.map((photo, idx) => (
-                  <div
-                    key={photo.id}
-                    className="gallery-card"
-                    onClick={() => setActiveLightbox(idx)}
-                    role="button"
-                    tabIndex={0}
-                    onKeyDown={(e) => { if (e.key === 'Enter') setActiveLightbox(idx); }}
-                  >
-                    <div className="gallery-img-wrap">
-                      <img src={photo.src} alt={photo.title} loading="lazy" />
-                    </div>
-                    <div className="gallery-card-badge">
-                      {photo.title}
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              <p className="note" style={{ marginTop: '22px' }}>
-                Cherished moments leading to our special day
+              <p className="details-invocation">{t(weddingInfo.invocation)}</p>
+              <h2 style={{ marginBottom: '6px' }}>{t('Wedding details')}</h2>
+              <p className="note" style={{ marginBottom: '22px' }}>
+                {lang === 'kn'
+                  ? 'ಪ್ರಜ್ವಲಾ ಮತ್ತು ಶ್ರವಣ್ ಅವರ ಶುಭ ವಿವಾಹ ಸಮಾರಂಭಗಳಲ್ಲಿ ಭಾಗವಹಿಸಿ ನವದಂಪತಿಗಳನ್ನು ಹರಸಿ. ಕ್ಷಣಗಣನೆ ಹಾಗೂ ಮಾರ್ಗಸೂಚಿಗಳನ್ನು ಕೆಳಗೆ ವೀಕ್ಷಿಸಿ.'
+                  : 'Join us to celebrate the wedding ceremonies of Prajwala & Shravan in Mysuru. Tap below to view live countdowns and directions.'}
               </p>
+
+              {/* Event 1: Reception */}
+              <div className="event-card-row main-event-card">
+                <div className="event-card-header">
+                  <span className="event-card-tag main-tag">
+                    ✨ {lang === 'kn' ? 'ದಿನ ೧' : 'Day 1'}
+                  </span>
+                  <h3>{t('Wedding Reception')}</h3>
+                </div>
+                <div className="event-card-body">
+                  <p className="event-card-line">
+                    <strong>🗓️ {lang === 'kn' ? 'ದಿನಾಂಕ' : 'Date'}:</strong> {t(receptionDetails.date)}
+                  </p>
+                  <p className="event-card-line">
+                    <strong>⏰ {lang === 'kn' ? 'ಕಾರ್ಯಕ್ರಮ' : 'Program'}:</strong>{' '}
+                    {lang === 'kn' ? 'ದೇವತಾ ಕಾರ್ಯಗಳು ಸಂಜೆ 4:00 • ಆರತಕ್ಷತೆ ಸಂಜೆ 7:00 ರಿಂದ' : 'Devatha Karya at 4:00 pm • Reception at 7:00 pm onwards'}
+                  </p>
+                  <p className="event-card-line">
+                    <strong>📍 {lang === 'kn' ? 'ಸ್ಥಳ' : 'Venue'}:</strong> {t(receptionDetails.venue)}
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  className="btn btn-wed btn-event-cta"
+                  onClick={() => navigateTo('reception')}
+                >
+                  {lang === 'kn' ? 'ಆರತಕ್ಷತೆ ವಿವರಗಳು & ಕ್ಷಣಗಣನೆ ವೀಕ್ಷಿಸಿ →' : 'View Reception Details & Timer →'}
+                </button>
+              </div>
+
+              {/* Event 2: Muhurtham */}
+              <div className="event-card-row gold-card">
+                <div className="event-card-header">
+                  <span className="event-card-tag gold-tag">ॐ Day 2</span>
+                  <h3>{t('Shubha Muhurtham')}</h3>
+                </div>
+                <div className="event-card-body">
+                  <p className="event-card-line">
+                    <strong>🗓️ {lang === 'kn' ? 'ದಿನಾಂಕ' : 'Date'}:</strong> {t(muhurthamDetails.date)}
+                  </p>
+                  <p className="event-card-line">
+                    <strong>⏰ {lang === 'kn' ? 'ಲಗ್ನ' : 'Lagna'}:</strong>{' '}
+                    {lang === 'kn' ? 'ಮಧ್ಯಾಹ್ನ 12:10 ರಿಂದ 12:35 ರ ಶುಭ ಕುಂಭ ಲಗ್ನದಲ್ಲಿ' : '12:10 pm to 12:35 pm (Kumbha Lagna)'}
+                  </p>
+                  <p className="event-card-line">
+                    <strong>🪔 {lang === 'kn' ? 'ಸ್ಥಳ' : 'Venue'}:</strong> {t(muhurthamDetails.venue)}
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  className="btn btn-wed btn-event-cta"
+                  onClick={() => navigateTo('muhurtham')}
+                >
+                  {lang === 'kn' ? 'ಮುಹೂರ್ತ & ಕ್ಷಣಗಣನೆ ವೀಕ್ಷಿಸಿ →' : 'View Muhurtham & Live Timer →'}
+                </button>
+              </div>
+
+              {/* Main Venue & Map Link */}
+              <div className="venue-highlight-box">
+                <h4>🏛️ {lang === 'kn' ? 'ವಿವಾಹ ಹಾಗೂ ಆರತಕ್ಷತೆ ಸ್ಥಳ' : 'Wedding & Reception Venue'}</h4>
+                <p className="venue-address-text">{t(weddingInfo.venueFull)}</p>
+                <a href={weddingInfo.venueMapUrl} target="_blank" rel="noopener noreferrer" className="btn btn-wed btn-map-main">
+                  {lang === 'kn' ? 'ವಿವಾಹ ಸ್ಥಳ ಗೂಗಲ್ ಮ್ಯಾಪ್‌ನಲ್ಲಿ ನೋಡಿ 📍' : 'Open Venue in Google Maps 📍'}
+                </a>
+              </div>
+
+              {/* Special Appeal (From PDF Page 8) */}
+              <div className="special-appeal-card">
+                <div className="appeal-icon">🌾</div>
+                <h4>{lang === 'kn' ? 'ವಿಶೇಷ ಮನವಿ / Special Appeal' : 'Special Appeal / ವಿಶೇಷ ಮನವಿ'}</h4>
+                <p className="appeal-text-primary">
+                  {lang === 'kn' ? weddingInfo.specialAppeal.messageKn : weddingInfo.specialAppeal.messageEn}
+                </p>
+                <p className="appeal-text-secondary">
+                  {lang === 'kn' ? weddingInfo.specialAppeal.messageEn : weddingInfo.specialAppeal.messageKn}
+                </p>
+              </div>
             </div>
           </section>
         )}
 
-        {/* 6. THE FAMILIES */}
-        {page === 'family' && (
-          <section className="pg" id="p-family">
-            {Array.from({ length: 8 }).map((_, i) => (
-              <span
-                key={i}
-                className="sp"
-                style={{
-                  left: `${(i * 29) % 100}%`,
-                  width: `${5 + (i % 6)}px`,
-                  height: `${5 + (i % 6)}px`,
-                  animationDuration: `${6 + (i % 6)}s`,
-                  animationDelay: `${-(i * 1.5)}s`
-                }}
-              />
-            ))}
-            <div className="paper">
-              <h2>The families</h2>
-              <div className="list-group list-group-flush rows" data-stagger>
-                <div className="list-group-item" style={{ animationDelay: '0.35s' }}>
-                  <b>Family of Prajwala</b>Parents’ names and family members go here.
+        {/* 4. RECEPTION DEDICATED PAGE */}
+        {page === 'reception' && (
+          <section className="pg" id="p-reception">
+            <div className="paper event-paper">
+              <div className="event-nav-header">
+                <button type="button" className="btn-event-nav" onClick={() => navigateTo('details')}>
+                  {t('Back to Details')}
+                </button>
+                <button type="button" className="btn-event-nav btn-switch" onClick={() => navigateTo('muhurtham')}>
+                  {t('Switch to Muhurtham')}
+                </button>
+              </div>
+
+              <p className="details-invocation">{t(weddingInfo.invocation)}</p>
+
+              <div className="event-badge main-event-badge">
+                ✨ {lang === 'kn' ? 'ವಿವಾಹ ಆರತಕ್ಷತೆ' : 'Wedding Reception'}
+              </div>
+              <h1 className="event-title">{t(receptionDetails.title)}</h1>
+              <p className="event-date-time">
+                🗓️ {t(receptionDetails.date)} &nbsp;•&nbsp; ⏰ {t(receptionDetails.time)}
+              </p>
+
+              <div className="event-timer-container">
+                <CountdownTimer
+                  targetDate={receptionDetails.targetIso}
+                  title={{ en: "Countdown to Reception", kn: "ಆರತಕ್ಷತೆ ಸಮಾರಂಭಕ್ಕೆ ಕ್ಷಣಗಣನೆ" }}
+                  lang={lang}
+                />
+              </div>
+
+              <hr className="event-divider" />
+
+              <div className="event-info-grid">
+                <div className="event-info-card">
+                  <div className="info-icon">📍</div>
+                  <h3>{lang === 'kn' ? 'ಸ್ಥಳ' : 'Venue'}</h3>
+                  <p className="primary-text">{t(receptionDetails.venue)}</p>
+                  <p className="sub-text">{t(receptionDetails.venueAddress)}</p>
+                  <a href={receptionDetails.mapUrl} target="_blank" rel="noopener noreferrer" className="btn-map-link" style={{ marginTop: '8px' }}>
+                    {lang === 'kn' ? 'ಗೂಗಲ್ ಮ್ಯಾಪ್‌ನಲ್ಲಿ ನೋಡಿ 📍' : 'Open in Google Maps 📍'}
+                  </a>
                 </div>
-                <div className="list-group-item" style={{ animationDelay: '0.49s' }}>
-                  <b>Family of Shravan</b>Parents’ names and family members go here.
+                <div className="event-info-card">
+                  <div className="info-icon">👔</div>
+                  <h3>{lang === 'kn' ? 'ಉಡುಪಿನ ಶೈಲಿ' : 'Dress Code'}</h3>
+                  <p className="primary-text">{t(receptionDetails.dressCode)}</p>
+                  <p className="sub-text">
+                    {lang === 'kn' ? 'ಸಂಜೆಯ ಸಂಗೀತ ಹಾಗೂ ಆರತಕ್ಷತೆ ಸಂಭ್ರಮಕ್ಕೆ ತಕ್ಕಂತೆ ಶೃಂಗಾರಗೊಳ್ಳಿ' : 'Dress elegantly for an evening of music, felicitation & celebration'}
+                  </p>
                 </div>
-                <div className="list-group-item" style={{ animationDelay: '0.63s' }}>
-                  <b>Questions?</b>Please call [contact name] at +91 00000 00000.
+              </div>
+
+              <div className="event-section-block">
+                <h3>✨ {t('Ceremony Highlights')}</h3>
+                <ul className="event-highlights-list">
+                  {receptionDetails.highlights.map((item, idx) => (
+                    <li key={idx}>
+                      <span className="hl-bullet">✦</span>
+                      <span>{t(item)}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Host Contacts */}
+              <div className="event-section-block" style={{ textAlign: 'center' }}>
+                <h4 style={{ color: '#8a1c2f', marginBottom: '8px', fontSize: '1.15rem' }}>
+                  {lang === 'kn' ? 'ಆತಿಥ್ಯ ಮತ್ತು ವಿಚಾರಣೆ' : 'Host & Assistance'}
+                </h4>
+                <p style={{ fontSize: '0.9rem', color: '#5a0f1f' }}>
+                  {t(weddingInfo.brideParents)} • {t(weddingInfo.brother)}
+                </p>
+                <div style={{ display: 'flex', gap: '8px', justifyContent: 'center', flexWrap: 'wrap', marginTop: '8px' }}>
+                  {weddingInfo.contacts.map((c, i) => (
+                    <a key={i} href={`tel:${c.phone}`} className="contact-call-btn" style={{ fontSize: '0.82rem' }}>
+                      📞 {c.phone}
+                    </a>
+                  ))}
                 </div>
+              </div>
+
+              <div className="event-footer-action">
+                <button type="button" className="btn btn-wed" onClick={() => navigateTo('muhurtham')}>
+                  {lang === 'kn' ? 'ಮುಹೂರ್ತದ ವಿವರಗಳು ಮತ್ತು ಕ್ಷಣಗಣನೆ ವೀಕ್ಷಿಸಿ (14 ಡಿಸೆಂಬರ್) →' : 'Explore Shubha Muhurtham Details (14 Dec) →'}
+                </button>
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/* 5. MUHURTHAM DEDICATED PAGE */}
+        {page === 'muhurtham' && (
+          <section className="pg" id="p-muhurtham">
+            <div className="paper event-paper">
+              <div className="event-nav-header">
+                <button type="button" className="btn-event-nav" onClick={() => navigateTo('details')}>
+                  {t('Back to Details')}
+                </button>
+                <button type="button" className="btn-event-nav btn-switch" onClick={() => navigateTo('reception')}>
+                  {t('Switch to Reception')}
+                </button>
+              </div>
+
+              <p className="details-invocation">{t(weddingInfo.invocation)}</p>
+
+              <div className="event-badge gold-badge">ॐ {t('Shubha Muhurtham')}</div>
+              <h1 className="event-title">{t(muhurthamDetails.title)}</h1>
+              <p className="event-date-time">
+                🗓️ {t(muhurthamDetails.date)} &nbsp;•&nbsp; ⏰ {t(muhurthamDetails.time)}
+              </p>
+
+              <p className="panchanga-text">
+                {t(muhurthamDetails.panchanga)}
+              </p>
+
+              <div className="event-timer-container">
+                <CountdownTimer
+                  targetDate={muhurthamDetails.targetIso}
+                  title={{ en: "Countdown to Muhurtham", kn: "ಶುಭ ಮುಹೂರ್ತಕ್ಕೆ ಕ್ಷಣಗಣನೆ" }}
+                  lang={lang}
+                />
+              </div>
+
+              <hr className="event-divider" />
+
+              <div className="event-info-grid">
+                <div className="event-info-card">
+                  <div className="info-icon">🪔</div>
+                  <h3>{lang === 'kn' ? 'ಕಲ್ಯಾಣ ಮಂಟಪ' : 'Sacred Mandapa'}</h3>
+                  <p className="primary-text">{t(muhurthamDetails.venue)}</p>
+                  <p className="sub-text">{t(muhurthamDetails.venueAddress)}</p>
+                  <a href={muhurthamDetails.mapUrl} target="_blank" rel="noopener noreferrer" className="btn-map-link" style={{ marginTop: '8px' }}>
+                    {lang === 'kn' ? 'ಗೂಗಲ್ ಮ್ಯಾಪ್‌ನಲ್ಲಿ ನೋಡಿ 📍' : 'Open in Google Maps 📍'}
+                  </a>
+                </div>
+                <div className="event-info-card">
+                  <div className="info-icon">✨</div>
+                  <h3>{lang === 'kn' ? 'ಉಡುಪಿನ ಶೈಲಿ' : 'Dress Code'}</h3>
+                  <p className="primary-text">{t(muhurthamDetails.dressCode)}</p>
+                  <p className="sub-text">
+                    {lang === 'kn' ? 'ಸಾಂಪ್ರದಾಯಿಕ ರೇಷ್ಮೆ ಸೀರೆ, ಪಂಚೆ ಶಲ್ಯ ಅಥವಾ ಸಾಂಪ್ರದಾಯಿಕ ಉಡುಪು' : 'Traditional silk sarees, dhotis, or festive ethnic wear'}
+                  </p>
+                </div>
+              </div>
+
+              <div className="event-section-block">
+                <h3>🌿 {t('Ceremony Highlights')}</h3>
+                <ul className="event-highlights-list">
+                  {muhurthamDetails.highlights.map((item, idx) => (
+                    <li key={idx}>
+                      <span className="hl-bullet">✦</span>
+                      <span>{t(item)}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="event-section-block feast-block">
+                <h3>🍛 {t('Wedding Feast')}</h3>
+                <p>
+                  {lang === 'kn'
+                    ? 'ಪವಿತ್ರ ಮಾಂಗಲ್ಯ ಧಾರಣೆ ಮುಹೂರ್ತದ ನಂತರ ಬಾಳೆ ಎಲೆಯಲ್ಲಿ ಸಾಂಪ್ರದಾಯಿಕ ಮದುವೆ ಮಹಾ ಭೋಜನ ವ್ಯವಸ್ಥೆ ಇರಲಿದೆ.'
+                    : 'Sumptuous traditional South Indian wedding feast will be served on banana leaf following the sacred rituals.'}
+                </p>
+              </div>
+
+              <div className="event-footer-action">
+                <button type="button" className="btn btn-wed" onClick={() => navigateTo('reception')}>
+                  {lang === 'kn' ? '← ಸ್ವಾಗತ ಸಮಾರಂಭದ ವಿವರಗಳು ಮತ್ತು ಕ್ಷಣಗಣನೆ (13 ಡಿಸೆಂಬರ್)' : '← View Reception Details & Timer (13 Dec)'}
+                </button>
               </div>
             </div>
           </section>
         )}
       </main>
 
-      <footer>
-        Prajwala & Shravan, 14 February 2027
+      <footer className="site-footer">
+        <div className="site-footer-container">
+          {/* 1. Top Couple & Family Header */}
+          <div className="footer-top-header">
+            <div className="footer-couple-brand">
+              {t(weddingInfo.bride)} <i>&</i> {t(weddingInfo.groom)}
+            </div>
+            <div className="footer-meta">
+              <span>{t(weddingInfo.datesCombined)} • {lang === 'kn' ? 'ಮೈಸೂರು' : 'Mysuru'}</span>
+              <span className="footer-meta-sep">•</span>
+              <span>{t(weddingInfo.family)}</span>
+              <span className="footer-meta-sep">•</span>
+              <span>{t(weddingInfo.brother)}</span>
+            </div>
+          </div>
+
+          {/* 2. With Best Wishes from Logos (At the bottom, unboxed logo-strip) */}
+          <div className="footer-wishes-wrapper">
+            <div className="footer-wishes-title">
+              {lang === 'kn' ? 'ಶುಭಾಶಯಗಳೊಂದಿಗೆ:' : 'With Best Wishes from:'}
+            </div>
+            <div className="footer-logos-strip">
+              <div className="footer-logo-wrap" title="Nag Digital Network">
+                <img
+                  src="./public/logos/nag-digital-logo-transparent.png"
+                  alt="Nag Digital Network"
+                  className="footer-logo-img logo-nag"
+                />
+              </div>
+              <div className="footer-logo-wrap" title="Advika Architecture Design Studio">
+                <img
+                  src="./public/logos/advika-logo-transparent.png"
+                  alt="Advika Architecture Design Studio"
+                  className="footer-logo-img logo-advika"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
       </footer>
 
-      {/* Lightbox Modal */}
-      {activeLightbox !== null && (
-        <div
-          className="lightbox-backdrop"
-          onClick={() => setActiveLightbox(null)}
-        >
-          <div
-            className="lightbox-content"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <button
-              className="lightbox-close"
-              aria-label="Close"
-              onClick={() => setActiveLightbox(null)}
-            >
-              ✕
-            </button>
-            <div className="lightbox-img-area">
-              <img
-                src={galleryPhotos[activeLightbox].src}
-                alt={galleryPhotos[activeLightbox].title}
-              />
+      {/* Language Selection Alert Modal */}
+      {langModalOpen && (
+        <div className="lang-modal-backdrop" role="dialog" aria-modal="true">
+          <div className="lang-modal-box">
+            {localStorage.getItem('wedding_lang') && (
+              <button className="lang-modal-close" onClick={() => setLangModalOpen(false)}>✕</button>
+            )}
+            <div className="lang-modal-header">
+              <div className="lang-modal-om">ॐ ಶ್ರೀ ವಿಶ್ವಕರ್ಮಾಯ ನಮಃ ॐ</div>
+              <h2 className="lang-modal-title">Prajwala & Shravan</h2>
+              <div className="lang-modal-sub">
+                Wedding Celebration Invitation • ಶುಭ ವಿವಾಹ ಆಮಂತ್ರಣ ಪತ್ರಿಕೆ
+              </div>
+              <div className="lang-modal-divider">
+                <span className="lang-modal-gem">✦</span>
+              </div>
+              <p className="lang-modal-instruction">
+                Please choose your language to view the invitation
+                <br />
+                <span className="kn-sub">ಆಮಂತ್ರಣವನ್ನು ವೀಕ್ಷಿಸಲು ನಿಮ್ಮ ಭಾಷೆಯನ್ನು ಆಯ್ಕೆಮಾಡಿ</span>
+              </p>
             </div>
-            <div className="lightbox-title">
-              {galleryPhotos[activeLightbox].title}
-            </div>
-            <div className="lightbox-counter">
-              {galleryPhotos[activeLightbox].sub} • {activeLightbox + 1} of {galleryPhotos.length}
-            </div>
-            <div className="lightbox-nav">
+
+            <div className="lang-modal-options">
               <button
-                className="lightbox-btn"
-                onClick={() =>
-                  setActiveLightbox((activeLightbox - 1 + galleryPhotos.length) % galleryPhotos.length)
-                }
+                type="button"
+                className={`lang-option-card ${lang === 'en' ? 'active' : ''}`}
+                onClick={() => selectLanguage('en')}
               >
-                ‹ Previous
+                <div className="lang-badge">EN</div>
+                <div className="lang-name">English</div>
+                <div className="lang-desc">View invitation & details in English</div>
+                <span className="lang-select-btn">Select English →</span>
               </button>
+
               <button
-                className="lightbox-btn"
-                onClick={() =>
-                  setActiveLightbox((activeLightbox + 1) % galleryPhotos.length)
-                }
+                type="button"
+                className={`lang-option-card lang-option-kn ${lang === 'kn' ? 'active' : ''}`}
+                onClick={() => selectLanguage('kn')}
               >
-                Next ›
+                <div className="lang-badge">ಕ</div>
+                <div className="lang-name">ಕನ್ನಡ</div>
+                <div className="lang-desc">ಕನ್ನಡದಲ್ಲಿ ಆಮಂತ್ರಣ ಹಾಗೂ ವಿವರಗಳನ್ನು ವೀಕ್ಷಿಸಿ</div>
+                <span className="lang-select-btn">ಕನ್ನಡ ಆಯ್ಕೆಮಾಡಿ →</span>
               </button>
+            </div>
+
+            <div className="lang-modal-footer">
+              <small>
+                You can also switch language at any time from the top menu bar.
+                <br />
+                ಮೇಲ್ಭಾಗದ ಮೆನುವಿನಿಂದ ನೀವು ಯಾವಾಗ ಬೇಕಾದರೂ ಭಾಷೆ ಬದಲಾಯಿಸಬಹುದು.
+              </small>
             </div>
           </div>
         </div>
@@ -654,4 +1204,3 @@ ReactDOM.createRoot(document.getElementById('root')).render(<App />);
 </script>
 </body>
 </html>
-
