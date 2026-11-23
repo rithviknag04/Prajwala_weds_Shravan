@@ -174,10 +174,10 @@ export default function Welcome({ onNavigate }) {
       </div>
 
       <p className="t big" style={{ animationDelay: '1.7s' }}>
-        <T>are getting married</T>
+        <T en="Getting married on" kn="ವಿವಾಹ ದಿನಾಂಕ" />
       </p>
       <p className="t date-highlight" style={{ animationDelay: '2s' }}>
-        🗓️ {t(weddingInfo.datesCombined)} • <T en="Mysuru" kn="ಮೈಸೂರು" />
+        🗓️ <T en="14th December 2026, Monday" kn="ಸೋಮವಾರ, 14 ಡಿಸೆಂಬರ್ 2026" /> • <T en="Mysuru" kn="ಮೈಸೂರು" />
       </p>
 
       <section className="tg">
@@ -268,7 +268,9 @@ export default function Welcome({ onNavigate }) {
         <p className="sr big" style={{ marginTop: '24px' }}>
           {t(weddingInfo.bride)} & {t(weddingInfo.groom)}
         </p>
-        <p className="sr">{t(weddingInfo.dateFormatted)}</p>
+        <p className="sr">
+          <T en="14th December 2026, Monday" kn="ಸೋಮವಾರ, 14 ಡಿಸೆಂಬರ್ 2026" />
+        </p>
         <a
           className="btn btn-wed sr"
           href="#home"

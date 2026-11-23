@@ -4,7 +4,7 @@ export const weddingInfo = {
     kn: "|| ಶ್ರೀ ವಿಶ್ವಕರ್ಮ ಪರಬ್ರಹ್ಮಣೇ ನಮಃ ||"
   },
   family: {
-    en: "P Masthachar Family",
+    en: "P Masthachar family",
     kn: "ಪಿ ಮಾಸ್ತಾಚಾರ್ ಕುಟುಂಬ"
   },
   gotra: {
@@ -12,8 +12,8 @@ export const weddingInfo = {
     kn: "ಮುತ್ತುಗದಹಳ್ಳಿ ವಂಶದ ಪ್ರತ್ನಸ ಋಷಿ ಗೋತ್ರೋದ್ಭವರು"
   },
   grandparents: {
-    en: "In sacred memory of Late Smt. Puttathayamma & Late Sri Masthachar P",
-    kn: "ಕೀ॥ಶೇ॥ ಶ್ರೀಮತಿ ಪುಟ್ಟತಾಯಮ್ಮ ಮತ್ತು ಕೀ॥ಶೇ॥ ಶ್ರೀ ಮಾಸ್ತಾಚಾರ್ ಪಿ ಅವರ ಆಶೀರ್ವಾದದೊಂದಿಗೆ"
+    en: "With blessings of Late Puttathayamma & Late P Masthachar",
+    kn: "ಕೀ॥ಶೇ॥ ಶ್ರೀಮತಿ ಪುಟ್ಟತಾಯಮ್ಮ ಮತ್ತು ಕೀ॥ಶೇ॥ ಶ್ರೀ ಪಿ ಮಾಸ್ತಾಚಾರ್ ಅವರ ಆಶೀರ್ವಾದದೊಂದಿಗೆ"
   },
   invitingElders: {
     en: "Smt. Dakshayani K & Sri Kumaraswamy M",

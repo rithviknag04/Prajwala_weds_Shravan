@@ -126,13 +126,13 @@ export default function Invitation({ onNavigate }) {
 
           <hr className="card-ornate-divider" style={{ '--d': '0.84s' }} />
 
-          {/* RECEPTION */}
+          {/* RECEPTION GOLD BOX */}
           <div className="card-reception-gold-box" style={{ '--d': '0.94s' }}>
             <p className="card-event-badge-tag">
               ✨ <T en="Wedding Reception" kn="ವಿವಾಹ ಸ್ವಾಗತ ಸಮಾರಂಭ" />
             </p>
             <p className="card-event-date-row">
-              {t(weddingInfo.dateFormatted)}
+              <T en="Sunday, 13 December 2026" kn="ಭಾನುವಾರ, 13 ಡಿಸೆಂಬರ್ 2026" />
             </p>
             <p className="card-event-timings-row">
               <T
@@ -142,28 +142,36 @@ export default function Invitation({ onNavigate }) {
             </p>
           </div>
 
-          <div className="card-venue-container" style={{ '--d': '1.04s' }}>
+          {/* MUHURTHAM GOLD BOX */}
+          <div className="card-reception-gold-box" style={{ '--d': '1.04s' }}>
+            <p className="card-event-badge-tag">
+              🪔 <T en="Shubha Muhurtham" kn="ಶುಭ ಮುಹೂರ್ತ" />
+            </p>
+            <p className="card-event-date-row">
+              <T en="Monday, 14 December 2026" kn="ಸೋಮವಾರ, 14 ಡಿಸೆಂಬರ್ 2026" />
+            </p>
+            <p className="card-event-timings-row">
+              <T
+                en="Muhurtham: 12:10 pm to 12:35 pm (Kumbha Lagna)"
+                kn="ಮುಹೂರ್ತ: ಮಧ್ಯಾಹ್ನ 12:10 ರಿಂದ 12:35 ರ ಶುಭ ಕುಂಭ ಲಗ್ನದಲ್ಲಿ"
+              />
+            </p>
+          </div>
+
+          {/* VENUE */}
+          <div className="card-venue-container" style={{ '--d': '1.14s' }}>
             <div className="card-venue-title">
-              🏛️ {t(weddingInfo.venue)}
+              📍 <T en="Venue" kn="ಸ್ಥಳ" />: {t(weddingInfo.venue)}
             </div>
             <div className="card-venue-sub">
               {t(weddingInfo.venueAddress)}
             </div>
           </div>
 
-          <div className="card-muhurtham-pill" style={{ '--d': '1.14s' }}>
-            <span className="muhurtham-lamp">🪔</span>
-            <span className="muhurtham-pill-text">
-              <T
-                en="Shubha Muhurtham: Monday, 14 Dec 2026 in Kumbha Lagna (12:10 pm - 12:35 pm)"
-                kn="ಶುಭ ಮುಹೂರ್ತ: ಸೋಮವಾರ, 14 ಡಿಸೆಂಬರ್ 2026 • ಮಧ್ಯಾಹ್ನ 12:10 ರಿಂದ 12:35 ರ ಶುಭ ಕುಂಭ ಲಗ್ನದಲ್ಲಿ"
-              />
-            </span>
-          </div>
-
+          {/* BEST REGARDS */}
           <div className="card-regards-box" style={{ '--d': '1.24s' }}>
             <div className="card-regards-title">
-              <T en="With Warm Regards & Blessings:" kn="ಆಹ್ವಾನಿಸುವವರು:" />
+              <T en="With Best Regards:" kn="ಆಹ್ವಾನಿಸುವವರು:" />
             </div>
             <div className="card-regards-names">
               <span>{t(weddingInfo.brideParents)}</span>

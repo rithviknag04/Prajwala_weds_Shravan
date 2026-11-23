@@ -14,6 +14,10 @@ export const translations = {
   "Two hearts, one story": "ಎರಡು ಮನಸ್ಸು, ಒಂದು ಸುಂದರ ಬಂಧ",
   "Two hearts, one sacred celebration": "ಎರಡು ಮನಸ್ಸು, ಒಂದು ಪವಿತ್ರ ಬಂಧ",
   "are getting married": "ವಿವಾಹ ಬಂಧನಕ್ಕೆ ಕಾಲಿಡುತ್ತಿದ್ದಾರೆ",
+  "Getting married on": "ವಿವಾಹ ದಿನಾಂಕ",
+  "Getting Married On": "ವಿವಾಹ ದಿನಾಂಕ",
+  "14th December 2026, Monday": "ಸೋಮವಾರ, 14 ಡಿಸೆಂಬರ್ 2026",
+  "14th December 2026 Monday": "ಸೋಮವಾರ, 14 ಡಿಸೆಂಬರ್ 2026",
   "Scroll down": "ಕೆಳಗೆ ಸ್ಕ್ರಾಲ್ ಮಾಡಿ",
   "Swipe the photos": "ಭಾವಚಿತ್ರಗಳನ್ನು ಸರಿಸಿ (Swipe)",
   "Tap or swipe the photos": "ಭಾವಚಿತ್ರಗಳನ್ನು ಸ್ಪರ್ಶಿಸಿ ಅಥವಾ ಸರಿಸಿ (Tap / Swipe)",
@@ -81,8 +85,10 @@ export const translations = {
   "Special Appeal": "ವಿಶೇಷ ಮನವಿ",
 
   // Family, Lineage & Blessings
+  "P Masthachar family": "ಪಿ ಮಾಸ್ತಾಚಾರ್ ಕುಟುಂಬ",
   "P Masthachar Family": "ಪಿ ಮಾಸ್ತಾಚಾರ್ ಕುಟುಂಬ",
   "P Masthachar family invites...": "ಪಿ ಮಾಸ್ತಾಚಾರ್ ಕುಟುಂಬದ ಆಮಂತ್ರಿಣ . . .",
+  "With blessings of Late Puttathayamma & Late P Masthachar": "ಕೀ॥ಶೇ॥ ಶ್ರೀಮತಿ ಪುಟ್ಟತಾಯಮ್ಮ ಮತ್ತು ಕೀ॥ಶೇ॥ ಶ್ರೀ ಪಿ ಮಾಸ್ತಾಚಾರ್ ಅವರ ಆಶೀರ್ವಾದದೊಂದಿಗೆ",
   "In sacred memory of Late Smt. Puttathayamma & Late Sri Masthachar P": "ಕೀ॥ಶೇ॥ ಶ್ರೀಮತಿ ಪುಟ್ಟತಾಯಮ್ಮ ಮತ್ತು ಕೀ॥ಶೇ॥ ಶ್ರೀ ಮಾಸ್ತಾಚಾರ್ ಪಿ ಅವರ ಆಶೀರ್ವಾದದೊಂದಿಗೆ",
   "Smt. Leela K and Sri Nagendra Kumar M": "ಶ್ರೀಮತಿ ಲೀಲಾ ಕೆ ಮತ್ತು ಶ್ರೀ ನಾಗೇಂದ್ರ ಕುಮಾರ್ ಎಂ",
   "Smt. Leela K & Sri Nagendra Kumar M": "ಶ್ರೀಮತಿ ಲೀಲಾ ಕೆ ಮತ್ತು ಶ್ರೀ ನಾಗೇಂದ್ರ ಕುಮಾರ್ ಎಂ",
@@ -95,6 +101,8 @@ export const translations = {
   "cordially invite you and your family to grace the wedding of their daughter": "ತಮ್ಮ ಪುತ್ರಿಯ ಶುಭ ವಿವಾಹ ಮಹೋತ್ಸವಕ್ಕೆ ಸಕುಟುಂಬ ಸಮೇತರಾಗಿ ಆಗಮಿಸಿ ವಧು-ವರರನ್ನು ಆಶೀರ್ವದಿಸಬೇಕೆಂದು ಪ್ರೀತಿಯಿಂದ ಆಹ್ವಾನಿಸುತ್ತಿದ್ದಾರೆ",
   "With the blessings of our families": "ಕುಟುಂಬದ ಹಿರಿಯರ ಹಾರೈಕೆ ಹಾಗೂ ಆಶೀರ್ವಾದದೊಂದಿಗೆ",
   "invite you to celebrate their wedding": "ತಮ್ಮ ಶುಭ ವಿವಾಹ ಮಹೋತ್ಸವಕ್ಕೆ ಪ್ರೀತಿಯಿಂದ ಆಹ್ವಾನಿಸುತ್ತಿದ್ದಾರೆ",
+  "With Best Regards:": "ಆಹ್ವಾನಿಸುವವರು:",
+  "With Best Regards": "ಆಹ್ವಾನಿಸುವವರು",
   "With Best Wishes from:": "ಶುಭಾಶಯಗಳೊಂದಿಗೆ:",
   "Wishing your cordial arrival:": "ತಮ್ಮ ಸುಖಾಗಮನವನ್ನು ಬಯಸುವ:",
 
