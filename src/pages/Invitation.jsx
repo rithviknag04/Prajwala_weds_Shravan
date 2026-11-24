@@ -130,7 +130,7 @@ export default function Invitation({ onNavigate }) {
           {/* RECEPTION GOLD BOX */}
           <div className="card-reception-gold-box" style={{ '--d': '0.94s' }}>
             <p className="card-event-badge-tag">
-              <T en="Wedding Reception" kn="ವಿವಾಹ ಸ್ವಾಗತ ಸಮಾರಂಭ" />
+              <T en="Wedding Reception" kn="ವಿವಾಹ ಆರತಕ್ಷತೆ ಸಮಾರಂಭ" />
             </p>
             <p className="card-event-date-row">
               <T en="Sunday, 13 December 2026" kn="ಭಾನುವಾರ, 13 ಡಿಸೆಂಬರ್ 2026" />
