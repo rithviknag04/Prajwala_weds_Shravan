@@ -75,7 +75,7 @@ export default function Reception({ onNavigate }) {
             <p className="primary-text">{t(receptionDetails.dressCode)}</p>
             <p className="sub-text">
               <T
-                en="Dress elegantly for an evening of music, felicitation & celebration"
+                en="Dress elegantly for an evening of music & celebration"
                 kn="ಸಂಜೆಯ ಸಂಗೀತ ಹಾಗೂ ಆರತಕ್ಷತೆ ಸಂಭ್ರಮಕ್ಕೆ ತಕ್ಕಂತೆ ಶೃಂಗಾರಗೊಳ್ಳಿ"
               />
             </p>

@@ -19,8 +19,8 @@ export default function Details({ onNavigate }) {
         <h2 style={{ marginBottom: '6px' }}><T>Wedding details</T></h2>
         <p className="note" style={{ marginBottom: '22px' }}>
           <T
-            en="Join us to celebrate the wedding ceremonies of Prajwala & Shravan in Mysuru. Tap below to view live countdowns and directions."
-            kn="ಪ್ರಜ್ವಲಾ ಮತ್ತು ಶ್ರವಣ್ ಅವರ ಶುಭ ವಿವಾಹ ಸಮಾರಂಭಗಳಲ್ಲಿ ಭಾಗವಹಿಸಿ ನವದಂಪತಿಗಳನ್ನು ಹರಸಿ. ಕ್ಷಣಗಣನೆ ಹಾಗೂ ಮಾರ್ಗಸೂಚಿಗಳನ್ನು ಕೆಳಗೆ ವೀಕ್ಷಿಸಿ."
+            en="Join us to celebrate the wedding ceremony of Prajwala Nag & Shravan Kumar."
+            kn="ಪ್ರಜ್ವಲಾ ನಾಗ್ ಮತ್ತು ಶ್ರವಣ್ ಕುಮಾರ್ ಅವರ ಶುಭ ವಿವಾಹ ಸಮಾರಂಭದಲ್ಲಿ ಭಾಗವಹಿಸಿ ನವದಂಪತಿಗಳನ್ನು ಹರಸಿ."
           />
         </p>
 

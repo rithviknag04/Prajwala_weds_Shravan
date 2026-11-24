@@ -195,7 +195,7 @@ export const receptionDetails = {
   },
   highlights: [
     { en: "4:00 pm • Devatha Karya Puja Rituals", kn: "ಸಂಜೆ 4:00 • ಪವಿತ್ರ ದೇವತಾ ಕಾರ್ಯಗಳ ಪೂಜಾವಿಧಾನ" },
-    { en: "7:00 pm • Grand Reception & Couple Felicitation", kn: "ಸಂಜೆ 7:00 • ವೈಭವದ ಆರತಕ್ಷತೆ ಮತ್ತು ವಧು-ವರರ ಸನ್ಮಾನ" },
+    { en: "7:00 pm • Grand Reception", kn: "ಸಂಜೆ 7:00 • ವೈಭವದ ಆರತಕ್ಷತೆ" },
     { en: "Music & Celebratory Dinner", kn: "ಸಂಗೀತ ಸಡಗರ ಹಾಗೂ ಮೃಷ್ಟಾನ್ನ ಭೋಜನ" }
   ]
 };
