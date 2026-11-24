@@ -57,10 +57,10 @@ export const translations = {
   // Events & Timers
   "Main Event": "ಮುಖ್ಯ ಸಮಾರಂಭ",
   "Main Event • Day 1": "ಮುಖ್ಯ ಸಮಾರಂಭ • ದಿನ ೧",
-  "Grand Wedding Reception (Main Event)": "ವಿವಾಹ ಸ್ವಾಗತ ಸಮಾರಂಭ (ಮುಖ್ಯ ಸಮಾರಂಭ)",
-  "Wedding Reception (Main Event)": "ವಿವಾಹ ಸ್ವಾಗತ ಸಮಾರಂಭ (ಮುಖ್ಯ ಸಮಾರಂಭ)",
+  "Grand Wedding Reception (Main Event)": "ವಿವಾಹ ಆರತಕ್ಷತೆ ಸಮಾರಂಭ (ಮುಖ್ಯ ಸಮಾರಂಭ)",
+  "Wedding Reception (Main Event)": "ವಿವಾಹ ಆರತಕ್ಷತೆ ಸಮಾರಂಭ (ಮುಖ್ಯ ಸಮಾರಂಭ)",
   "Reception": "ಸ್ವಾಗತ ಸಮಾರಂಭ",
-  "Wedding Reception": "ವಿವಾಹ ಸ್ವಾಗತ ಸಮಾರಂಭ",
+  "Wedding Reception": "ವಿವಾಹ ಆರತಕ್ಷತೆ ಸಮಾರಂಭ",
   "Aaratakshathe": "ಆರತಕ್ಷತೆ ಸಮಾರಂಭ",
   "Devatha Karya": "ದೇವತಾ ಕಾರ್ಯಗಳು",
   "Muhurtham": "ಶುಭ ಮುಹೂರ್ತ",

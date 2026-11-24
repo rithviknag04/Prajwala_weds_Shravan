@@ -164,7 +164,7 @@ export const receptionDetails = {
   isMainEvent: true,
   title: {
     en: "Wedding Reception",
-    kn: "ವಿವಾಹ ಸ್ವಾಗತ ಸಮಾರಂಭ"
+    kn: "ವಿವಾಹ ಆರತಕ್ಷತೆ ಸಮಾರಂಭ"
   },
   kannadaTitle: "ಆರತಕ್ಷತೆ ಸಮಾರಂಭ",
   date: {
