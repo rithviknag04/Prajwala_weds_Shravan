@@ -122,7 +122,7 @@ export default function Muhurtham({ onNavigate }) {
             className="btn btn-wed"
             onClick={() => onNavigate('reception')}
           >
-            <T en="← View Reception Details & Timer (13 Dec)" kn="← ಸ್ವಾಗತ ಸಮಾರಂಭದ ವಿವರಗಳು ಮತ್ತು ಕ್ಷಣಗಣನೆ (13 ಡಿಸೆಂಬರ್)" />
+            <T en="← View Reception Details & Timer (13 Dec)" kn="← ವಿವಾಹ ಆರತಕ್ಷತೆ ಸಮಾರಂಭದ ವಿವರಗಳು ಮತ್ತು ಕ್ಷಣಗಣನೆ (13 ಡಿಸೆಂಬರ್)" />
           </button>
         </div>
       </div>
