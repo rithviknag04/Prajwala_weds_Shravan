@@ -28,23 +28,23 @@ export default function Details({ onNavigate }) {
         <div className="event-card-row main-event-card">
           <div className="event-card-header">
             <span className="event-card-tag main-tag">
-              ✨ <T en="Day 1" kn="ದಿನ ೧" />
+              <T en="Day 1" kn="ದಿನ ೧" />
             </span>
             <h3><T>Wedding Reception</T></h3>
           </div>
           <div className="event-card-body">
             <p className="event-card-line">
-              <strong>🗓️ <T en="Date" kn="ದಿನಾಂಕ" />:</strong> {t(receptionDetails.date)}
+              <strong><T en="Date" kn="ದಿನಾಂಕ" />:</strong> {t(receptionDetails.date)}
             </p>
             <p className="event-card-line">
-              <strong>⏰ <T en="Program" kn="ಕಾರ್ಯಕ್ರಮ" />:</strong>{' '}
+              <strong><T en="Program" kn="ಕಾರ್ಯಕ್ರಮ" />:</strong>{' '}
               <T
                 en="Devatha Karya at 4:00 pm • Reception at 7:00 pm onwards"
                 kn="ದೇವತಾ ಕಾರ್ಯಗಳು ಸಂಜೆ 4:00 • ಆರತಕ್ಷತೆ ಸಂಜೆ 7:00 ರಿಂದ"
               />
             </p>
             <p className="event-card-line">
-              <strong>📍 <T en="Venue" kn="ಸ್ಥಳ" />:</strong> {t(receptionDetails.venue)}
+              <strong><T en="Venue" kn="ಸ್ಥಳ" />:</strong> {t(receptionDetails.venue)}
             </p>
           </div>
           <button
@@ -59,22 +59,22 @@ export default function Details({ onNavigate }) {
         {/* Event 2: Muhurtham */}
         <div className="event-card-row gold-card">
           <div className="event-card-header">
-            <span className="event-card-tag gold-tag">ॐ Day 2</span>
+            <span className="event-card-tag gold-tag">Day 2</span>
             <h3><T>Shubha Muhurtham</T></h3>
           </div>
           <div className="event-card-body">
             <p className="event-card-line">
-              <strong>🗓️ <T en="Date" kn="ದಿನಾಂಕ" />:</strong> {t(muhurthamDetails.date)}
+              <strong><T en="Date" kn="ದಿನಾಂಕ" />:</strong> {t(muhurthamDetails.date)}
             </p>
             <p className="event-card-line">
-              <strong>⏰ <T en="Lagna" kn="ಲಗ್ನ" />:</strong>{' '}
+              <strong><T en="Lagna" kn="ಲಗ್ನ" />:</strong>{' '}
               <T
                 en="12:10 pm to 12:35 pm (Kumbha Lagna)"
                 kn="ಮಧ್ಯಾಹ್ನ 12:10 ರಿಂದ 12:35 ರ ಶುಭ ಕುಂಭ ಲಗ್ನದಲ್ಲಿ"
               />
             </p>
             <p className="event-card-line">
-              <strong>🪔 <T en="Venue" kn="ಸ್ಥಳ" />:</strong> {t(muhurthamDetails.venue)}
+              <strong><T en="Venue" kn="ಸ್ಥಳ" />:</strong> {t(muhurthamDetails.venue)}
             </p>
           </div>
           <button
@@ -88,7 +88,7 @@ export default function Details({ onNavigate }) {
 
         {/* Main Venue & Map Link */}
         <div className="venue-highlight-box">
-          <h4>🏛️ <T en="Wedding & Reception Venue" kn="ವಿವಾಹ ಹಾಗೂ ಆರತಕ್ಷತೆ ಸ್ಥಳ" /></h4>
+          <h4><T en="Wedding & Reception Venue" kn="ವಿವಾಹ ಹಾಗೂ ಆರತಕ್ಷತೆ ಸ್ಥಳ" /></h4>
           <p className="venue-address-text">{t(weddingInfo.venueFull)}</p>
           <a
             href={weddingInfo.venueMapUrl}
@@ -96,13 +96,13 @@ export default function Details({ onNavigate }) {
             rel="noopener noreferrer"
             className="btn btn-wed btn-map-main"
           >
-            <T en="Open Venue in Google Maps 📍" kn="ವಿವಾಹ ಸ್ಥಳ ಗೂಗಲ್ ಮ್ಯಾಪ್‌ನಲ್ಲಿ ನೋಡಿ 📍" />
+            <T en="Open Venue in Google Maps" kn="ವಿವಾಹ ಸ್ಥಳ ಗೂಗಲ್ ಮ್ಯಾಪ್‌ನಲ್ಲಿ ನೋಡಿ" />
           </a>
         </div>
 
         {/* Special Appeal (From PDF Page 8) */}
         <div className="special-appeal-card">
-          <div className="appeal-icon">🌾</div>
+          <div className="appeal-icon">✦</div>
           <h4><T en="Special Appeal / ವಿಶೇಷ ಮನವಿ" kn="ವಿಶೇಷ ಮನವಿ / Special Appeal" /></h4>
           <p className="appeal-text-primary">
             {lang === 'kn' ? weddingInfo.specialAppeal.messageKn : weddingInfo.specialAppeal.messageEn}

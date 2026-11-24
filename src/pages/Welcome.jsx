@@ -173,11 +173,11 @@ export default function Welcome({ onNavigate }) {
         </figure>
       </div>
 
-      <p className="t big" style={{ animationDelay: '1.7s' }}>
+      <p className="t welcome-getting-married" style={{ animationDelay: '1.7s' }}>
         <T en="Getting married on" kn="ವಿವಾಹ ದಿನಾಂಕ" />
       </p>
       <p className="t date-highlight" style={{ animationDelay: '2s' }}>
-        🗓️ <T en="14th December 2026, Monday" kn="ಸೋಮವಾರ, 14 ಡಿಸೆಂಬರ್ 2026" /> • <T en="Mysuru" kn="ಮೈಸೂರು" />
+        <T en="14th December 2026, Monday" kn="ಸೋಮವಾರ, 14 ಡಿಸೆಂಬರ್ 2026" /> • <T en="Mysuru" kn="ಮೈಸೂರು" />
       </p>
 
       <section className="tg">
@@ -262,18 +262,13 @@ export default function Welcome({ onNavigate }) {
             })}
           </div>
         </div>
-        <p className="sr" style={{ fontSize: '.9rem', opacity: 0.8, marginTop: '44px' }}>
+        <p className="sr" style={{ fontSize: '.9rem', opacity: 0.8, marginTop: '36px' }}>
           <T>Tap or swipe the photos</T>
-        </p>
-        <p className="sr big" style={{ marginTop: '24px' }}>
-          {t(weddingInfo.bride)} & {t(weddingInfo.groom)}
-        </p>
-        <p className="sr">
-          <T en="14th December 2026, Monday" kn="ಸೋಮವಾರ, 14 ಡಿಸೆಂಬರ್ 2026" />
         </p>
         <a
           className="btn btn-wed sr"
           href="#home"
+          style={{ marginTop: '18px' }}
           onClick={(e) => {
             e.preventDefault();
             onNavigate('home');

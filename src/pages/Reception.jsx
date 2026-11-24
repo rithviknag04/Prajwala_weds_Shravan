@@ -33,12 +33,12 @@ export default function Reception({ onNavigate }) {
         <p className="details-invocation">{t(weddingInfo.invocation)}</p>
 
         <div className="event-badge main-event-badge">
-          ✨ <T>Wedding Reception</T>
+          <T>Wedding Reception</T>
         </div>
 
         <h1 className="event-title">{t(receptionDetails.title)}</h1>
         <p className="event-date-time">
-          🗓️ {t(receptionDetails.date)} &nbsp;•&nbsp; ⏰ {t(receptionDetails.time)}
+          {t(receptionDetails.date)} &nbsp;•&nbsp; {t(receptionDetails.time)}
         </p>
 
         {/* Live Countdown Timer */}
@@ -54,7 +54,7 @@ export default function Reception({ onNavigate }) {
         {/* Event Information Cards */}
         <div className="event-info-grid">
           <div className="event-info-card">
-            <div className="info-icon">📍</div>
+            <div className="info-icon">✦</div>
             <h3><T en="Venue" kn="ಸ್ಥಳ" /></h3>
             <p className="primary-text">{t(receptionDetails.venue)}</p>
             <p className="sub-text">{t(receptionDetails.venueAddress)}</p>
@@ -65,12 +65,12 @@ export default function Reception({ onNavigate }) {
               className="btn-map-link"
               style={{ marginTop: '8px' }}
             >
-              <T en="Open in Google Maps 📍" kn="ಗೂಗಲ್ ಮ್ಯಾಪ್‌ನಲ್ಲಿ ನೋಡಿ 📍" />
+              <T en="Open in Google Maps" kn="ಗೂಗಲ್ ಮ್ಯಾಪ್‌ನಲ್ಲಿ ನೋಡಿ" />
             </a>
           </div>
 
           <div className="event-info-card">
-            <div className="info-icon">👔</div>
+            <div className="info-icon">✦</div>
             <h3><T en="Dress Code" kn="ಉಡುಪಿನ ಶೈಲಿ" /></h3>
             <p className="primary-text">{t(receptionDetails.dressCode)}</p>
             <p className="sub-text">
@@ -85,7 +85,7 @@ export default function Reception({ onNavigate }) {
         {/* Evening Highlights */}
         <div className="event-section-block">
           <h3>
-            ✨ <T>Ceremony Highlights</T>
+            <T>Ceremony Highlights</T>
           </h3>
           <ul className="event-highlights-list">
             {receptionDetails.highlights.map((item, idx) => (
@@ -108,7 +108,7 @@ export default function Reception({ onNavigate }) {
           <div style={{ display: 'flex', gap: '8px', justifyContent: 'center', flexWrap: 'wrap', marginTop: '8px' }}>
             {weddingInfo.contacts.map((c, i) => (
               <a key={i} href={`tel:${c.phone}`} className="contact-call-btn" style={{ fontSize: '0.82rem' }}>
-                📞 {c.phone}
+                {c.phone}
               </a>
             ))}
           </div>

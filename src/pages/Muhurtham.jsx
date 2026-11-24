@@ -33,12 +33,12 @@ export default function Muhurtham({ onNavigate }) {
         <p className="details-invocation">{t(weddingInfo.invocation)}</p>
 
         <div className="event-badge gold-badge">
-          ॐ <T>Shubha Muhurtham</T>
+          <T>Shubha Muhurtham</T>
         </div>
 
         <h1 className="event-title">{t(muhurthamDetails.title)}</h1>
         <p className="event-date-time">
-          🗓️ {t(muhurthamDetails.date)} &nbsp;•&nbsp; ⏰ {t(muhurthamDetails.time)}
+          {t(muhurthamDetails.date)} &nbsp;•&nbsp; {t(muhurthamDetails.time)}
         </p>
 
         {/* Traditional Vedic Panchanga */}
@@ -59,7 +59,7 @@ export default function Muhurtham({ onNavigate }) {
         {/* Event Information Cards */}
         <div className="event-info-grid">
           <div className="event-info-card">
-            <div className="info-icon">🪔</div>
+            <div className="info-icon">✦</div>
             <h3><T en="Sacred Mandapa" kn="ಕಲ್ಯಾಣ ಮಂಟಪ" /></h3>
             <p className="primary-text">{t(muhurthamDetails.venue)}</p>
             <p className="sub-text">{t(muhurthamDetails.venueAddress)}</p>
@@ -70,12 +70,12 @@ export default function Muhurtham({ onNavigate }) {
               className="btn-map-link"
               style={{ marginTop: '8px' }}
             >
-              <T en="Open in Google Maps 📍" kn="ಗೂಗಲ್ ಮ್ಯಾಪ್‌ನಲ್ಲಿ ನೋಡಿ 📍" />
+              <T en="Open in Google Maps" kn="ಗೂಗಲ್ ಮ್ಯಾಪ್‌ನಲ್ಲಿ ನೋಡಿ" />
             </a>
           </div>
 
           <div className="event-info-card">
-            <div className="info-icon">✨</div>
+            <div className="info-icon">✦</div>
             <h3><T en="Dress Code" kn="ಉಡುಪಿನ ಶೈಲಿ" /></h3>
             <p className="primary-text">{t(muhurthamDetails.dressCode)}</p>
             <p className="sub-text">
@@ -90,7 +90,7 @@ export default function Muhurtham({ onNavigate }) {
         {/* Vedic Rituals & Highlights */}
         <div className="event-section-block">
           <h3>
-            🌿 <T>Ceremony Highlights</T>
+            <T>Ceremony Highlights</T>
           </h3>
           <ul className="event-highlights-list">
             {muhurthamDetails.highlights.map((item, idx) => (
@@ -105,7 +105,7 @@ export default function Muhurtham({ onNavigate }) {
         {/* Traditional Feast Notice */}
         <div className="event-section-block feast-block">
           <h3>
-            🍛 <T>Wedding Feast</T>
+            <T>Wedding Feast</T>
           </h3>
           <p>
             <T

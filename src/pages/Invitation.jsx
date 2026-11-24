@@ -54,14 +54,15 @@ export default function Invitation({ onNavigate }) {
         </div>
         <div className="par-parents-grid">
           <div>
-            <small><T en="Bride's Parents" kn="ವಧುವಿನ ಪೋಷಕರು" /></small>
             <p className="pn">{t(weddingInfo.brideParents)}</p>
           </div>
           <div>
-            <small><T en="Groom's Parents" kn="ವರನ ಪೋಷಕರು" /></small>
             <p className="pn">{t(weddingInfo.groomParents)}</p>
           </div>
         </div>
+        <p className="par-invites-tag">
+          <T en="cordially invites you" kn="ಪ್ರೀತಿಯಿಂದ ಆಹ್ವಾನಿಸುತ್ತಿದ್ದಾರೆ" />
+        </p>
       </div>
 
       <div className="stage">
@@ -129,7 +130,7 @@ export default function Invitation({ onNavigate }) {
           {/* RECEPTION GOLD BOX */}
           <div className="card-reception-gold-box" style={{ '--d': '0.94s' }}>
             <p className="card-event-badge-tag">
-              ✨ <T en="Wedding Reception" kn="ವಿವಾಹ ಸ್ವಾಗತ ಸಮಾರಂಭ" />
+              <T en="Wedding Reception" kn="ವಿವಾಹ ಸ್ವಾಗತ ಸಮಾರಂಭ" />
             </p>
             <p className="card-event-date-row">
               <T en="Sunday, 13 December 2026" kn="ಭಾನುವಾರ, 13 ಡಿಸೆಂಬರ್ 2026" />
@@ -145,7 +146,7 @@ export default function Invitation({ onNavigate }) {
           {/* MUHURTHAM GOLD BOX */}
           <div className="card-reception-gold-box" style={{ '--d': '1.04s' }}>
             <p className="card-event-badge-tag">
-              🪔 <T en="Shubha Muhurtham" kn="ಶುಭ ಮುಹೂರ್ತ" />
+              <T en="Shubha Muhurtham" kn="ಶುಭ ಮುಹೂರ್ತ" />
             </p>
             <p className="card-event-date-row">
               <T en="Monday, 14 December 2026" kn="ಸೋಮವಾರ, 14 ಡಿಸೆಂಬರ್ 2026" />
@@ -161,7 +162,7 @@ export default function Invitation({ onNavigate }) {
           {/* VENUE */}
           <div className="card-venue-container" style={{ '--d': '1.14s' }}>
             <div className="card-venue-title">
-              📍 <T en="Venue" kn="ಸ್ಥಳ" />: {t(weddingInfo.venue)}
+              <T en="Venue" kn="ಸ್ಥಳ" />: {t(weddingInfo.venue)}
             </div>
             <div className="card-venue-sub">
               {t(weddingInfo.venueAddress)}

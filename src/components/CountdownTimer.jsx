@@ -36,7 +36,7 @@ export default function CountdownTimer({ targetDate, title }) {
     return (
       <div className="countdown-box completed">
         <div className="countdown-complete-msg">
-          🎉 <T>The Celebration has Begun!</T> 🎉
+          ✦ <T>The Celebration has Begun!</T> ✦
         </div>
       </div>
     );
@@ -48,7 +48,7 @@ export default function CountdownTimer({ targetDate, title }) {
     <div className="countdown-box">
       {title && (
         <div className="countdown-title">
-          <span className="countdown-icon">⏳</span> {t(title)}
+          <span className="countdown-icon">✦</span> {t(title)}
         </div>
       )}
       <div className="countdown-grid">
