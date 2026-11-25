@@ -234,7 +234,7 @@ export const muhurthamDetails = {
     kn: "ಸಾಂಪ್ರದಾಯಿಕ ರೇಷ್ಮೆ ಸೀರೆ / ಪಂಚೆ ಶಲ್ಯ"
   },
   highlights: [
-    { en: "Kanyadaana & Vedic Vivaha Mantras", kn: "ಕನ್ಯಾದಾನ ಹಾಗೂ ವೈದಿಕ ವಿವಾಹ ಮಂತ್ರಘೋಷ" },
+    { en: "Kanyadaana & Vivaha Mantras", kn: "ಕನ್ಯಾದಾನ ಹಾಗೂ ವಿವಾಹ ಮಂತ್ರಘೋಷ" },
     { en: "Mangalya Dharane & Akshataropana (12:10 - 12:35 pm)", kn: "ಮಾಂಗಲ್ಯ ಧಾರಣೆ ಹಾಗೂ ಅಕ್ಷತಾರೋಪಣ (12:10 - 12:35 pm)" },
     { en: "Sapthapadi & Traditional Banana Leaf Feast", kn: "ಸಪ್ತಪದಿ ಹಾಗೂ ಬಾಳೆ ಎಲೆಯ ಸಾಂಪ್ರದಾಯಿಕ ಮದುವೆ ಭೋಜನ" }
   ]
